@@ -1,9 +1,14 @@
 package entities;
 
 import enumerations.EAquisition;
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-public class Major {
+@Entity
+public class Major implements Serializable {
     
+    @Id
     private String ID;
     private String description;
     private EAquisition aquisition;

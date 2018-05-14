@@ -1,9 +1,14 @@
 package entities;
 
 import enumerations.ERole;
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-public class Administrator {
+@Entity
+public class Administrator implements Serializable {
     
+    @Id
     private String ID;
     private String userId;
     private ERole role;

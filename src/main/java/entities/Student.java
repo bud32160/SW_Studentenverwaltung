@@ -2,9 +2,14 @@ package entities;
 
 import enumerations.EAquisition;
 import enumerations.ERole;
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-public class Student {
+@Entity
+public class Student implements Serializable {
     
+    @Id
     private String ID;
     private String userId;
     private String matrikelNumber;
@@ -13,12 +18,12 @@ public class Student {
     private Address address;
     private Major major;
     private EAquisition aquisition;
-    private ERole role;
+    private ERole eRole;
 
     public Student() {
     }
 
-    public Student(String ID, String userId, String matrikelNumber, String firstName, String lastName, Address address, Major major, EAquisition aquisition, ERole role) {
+    public Student(String ID, String userId, String matrikelNumber, String firstName, String lastName, Address address, Major major, EAquisition aquisition, ERole eRole) {
         this.ID = ID;
         this.userId = userId;
         this.matrikelNumber = matrikelNumber;
@@ -27,7 +32,7 @@ public class Student {
         this.address = address;
         this.major = major;
         this.aquisition = aquisition;
-        this.role = role;
+        this.eRole = eRole;
     }
     
     // Getter and setter
@@ -95,12 +100,12 @@ public class Student {
         this.aquisition = aquisition;
     }
 
-    public ERole getRole() {
-        return role;
+    public ERole geteRole() {
+        return eRole;
     }
 
-    public void setRole(ERole role) {
-        this.role = role;
+    public void seteRole(ERole eRole) {
+        this.eRole = eRole;
     }
-   
+ 
 }

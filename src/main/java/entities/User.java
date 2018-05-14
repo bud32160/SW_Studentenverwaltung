@@ -1,7 +1,13 @@
 package entities;
 
-public class User {
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class User implements Serializable {
     
+    @Id
     private String ID;
     private String roleUserId;
     private String userName;

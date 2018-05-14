@@ -1,7 +1,13 @@
 package entities;
 
-public class Address {
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Address implements Serializable {
     
+    @Id
     private String ID;
     private String street;
     private String houseNumber;

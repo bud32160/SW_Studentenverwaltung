@@ -1,11 +1,16 @@
 package entities;
 
 import enumerations.ERoom;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-public class Exam {
+@Entity
+public class Exam implements Serializable {
     
+    @Id
     private String ID;
     private String courseId;
     private String time;
