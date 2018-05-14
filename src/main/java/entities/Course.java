@@ -18,13 +18,13 @@ public class Course implements Serializable {
     private String time;
     private Date date;
     private ERoom room;
-    private List<String> participants;
+    // private List<String> participants;
     private int capacity;
 
     public Course() {
     }
 
-    public Course(String ID, String description, String majorId, String instructor, String time, Date date, ERoom room, List<String> participants, int capacity) {
+    public Course(String ID, String description, String majorId, String instructor, String time, Date date, ERoom room, int capacity) {
         this.ID = ID;
         this.description = description;
         this.majorId = majorId;
@@ -32,7 +32,6 @@ public class Course implements Serializable {
         this.time = time;
         this.date = date;
         this.room = room;
-        this.participants = participants;
         this.capacity = capacity;
     }
 
@@ -91,14 +90,6 @@ public class Course implements Serializable {
 
     public void setRoom(ERoom room) {
         this.room = room;
-    }
-
-    public List<String> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(List<String> participants) {
-        this.participants = participants;
     }
 
     public int getCapacity() {

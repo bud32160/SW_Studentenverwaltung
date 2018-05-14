@@ -17,20 +17,19 @@ public class Exam implements Serializable {
     private Date date;
     private String instructor;
     private ERoom room;
-    private List<String> participants;
+    // private List<String> participants;
     private int capacity;
 
     public Exam() {
     }
 
-    public Exam(String ID, String courseId, String time, Date date, String instructor, ERoom room, List<String> participants, int capacity) {
+    public Exam(String ID, String courseId, String time, Date date, String instructor, ERoom room, int capacity) {
         this.ID = ID;
         this.courseId = courseId;
         this.time = time;
         this.date = date;
         this.instructor = instructor;
         this.room = room;
-        this.participants = participants;
         this.capacity = capacity;
     }
     
@@ -81,14 +80,6 @@ public class Exam implements Serializable {
 
     public void setRoom(ERoom room) {
         this.room = room;
-    }
-
-    public List<String> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(List<String> participants) {
-        this.participants = participants;
     }
 
     public int getCapacity() {
