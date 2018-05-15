@@ -14,8 +14,8 @@ public class AccountModel implements Serializable {
     @Inject
     private AdministrationService administrationService;
     
-    private String ID;
-    private String roleUserId;
+    private int ID;
+    private int roleUserId;
     private String username;
     private String password;
     private String mailAdress;
@@ -26,19 +26,19 @@ public class AccountModel implements Serializable {
                 this.password, this.mailAdress));
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
-    public String getRoleUserId() {
+    public int getRoleUserId() {
         return roleUserId;
     }
 
-    public void setRoleUserId(String roleUserId) {
+    public void setRoleUserId(int roleUserId) {
         this.roleUserId = roleUserId;
     }
 
