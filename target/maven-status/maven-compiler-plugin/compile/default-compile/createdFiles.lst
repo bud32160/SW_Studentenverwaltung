@@ -1,5 +1,6 @@
 services\CourseService.class
 entities\Address_.class
+models\StudentModel.class
 entities\Administrator_.class
 entities\Course.class
 entities\User.class

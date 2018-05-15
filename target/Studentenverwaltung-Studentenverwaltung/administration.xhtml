@@ -6,9 +6,9 @@
         <title>Administration</title>
     </h:head>
     <h:body>
-        Admin Konsole:
+        User:
         <h:form>
-            <h:outputText value="User ID"/>
+            <h:outputText value="ID"/>
             <h:inputText value="#{accountModel.ID}"/>
         <br/>
             <h:outputText value="Student ID"/>
@@ -23,7 +23,47 @@
             <h:outputText value="E-Mail"/>
             <h:inputText value="#{accountModel.mailAdress}"/>
         <br/>
-        <h:commandButton action="#{accountModel.createUser()}" value="create"/>
+        <h:commandButton action="#{accountModel.createUser()}" value="erstellen"/>
+        <br/>
+        <br/>
+        </h:form>
+        Student:
+        <h:form>
+            <h:outputText value="ID"/>
+            <h:inputText value="#{studentModel.studentID}"/>
+        <br/>
+            <h:outputText value="User ID"/>
+            <h:inputText value="#{studentModel.userId}"/>
+        <br/>
+            <h:outputText value="Matrikelnummer"/>
+            <h:inputText value="#{studentModel.matrikelNumber}"/>
+        <br/>
+            <h:outputText value="Vorname"/>
+            <h:inputText value="#{studentModel.firstName}"/>
+        <br/>
+            <h:outputText value="Nachname"/>
+            <h:inputText value="#{studentModel.lastName}"/>
+        <br/>
+        <br/>
+            <h:outputText value="Adresse ID"/>
+            <h:inputText value="#{studentModel.addressID}"/>
+        <br/>
+            <h:outputText value="Straße"/>
+            <h:inputText value="#{studentModel.street}"/>
+        <br/>
+            <h:outputText value="Hausnummer"/>
+            <h:inputText value="#{studentModel.houseNumber}"/>
+        <br/>
+            <h:outputText value="PLZ"/>
+            <h:inputText value="#{studentModel.zipCode}"/>
+        <br/>
+            <h:outputText value="Stadt"/>
+            <h:inputText value="#{studentModel.city}"/>
+        <br/>
+            <h:outputText value="Land"/>
+            <h:inputText value="#{studentModel.country}"/>
+        <br/>
+        <h:commandButton action="#{studentModel.createStudent()}" value="erstellen"/>
         </h:form>
     </h:body>
 </html>

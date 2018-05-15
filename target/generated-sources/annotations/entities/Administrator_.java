@@ -10,7 +10,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Administrator_ {
 
 	public static volatile SingularAttribute<Administrator, ERole> role;
-	public static volatile SingularAttribute<Administrator, String> ID;
+	public static volatile SingularAttribute<Administrator, Integer> ID;
 	public static volatile SingularAttribute<Administrator, String> userId;
 
 }

@@ -12,7 +12,7 @@ public abstract class Exam_ {
 
 	public static volatile SingularAttribute<Exam, Date> date;
 	public static volatile SingularAttribute<Exam, String> instructor;
-	public static volatile SingularAttribute<Exam, String> ID;
+	public static volatile SingularAttribute<Exam, Integer> ID;
 	public static volatile SingularAttribute<Exam, String> time;
 	public static volatile SingularAttribute<Exam, String> courseId;
 	public static volatile SingularAttribute<Exam, ERoom> room;

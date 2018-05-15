@@ -11,7 +11,7 @@ public abstract class Major_ {
 
 	public static volatile SingularAttribute<Major, EAquisition> aquisition;
 	public static volatile SingularAttribute<Major, String> description;
-	public static volatile SingularAttribute<Major, String> ID;
+	public static volatile SingularAttribute<Major, Integer> ID;
 
 }
 

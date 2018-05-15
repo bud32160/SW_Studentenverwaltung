@@ -14,7 +14,7 @@ public abstract class Course_ {
 	public static volatile SingularAttribute<Course, String> majorId;
 	public static volatile SingularAttribute<Course, String> instructor;
 	public static volatile SingularAttribute<Course, String> description;
-	public static volatile SingularAttribute<Course, String> ID;
+	public static volatile SingularAttribute<Course, Integer> ID;
 	public static volatile SingularAttribute<Course, String> time;
 	public static volatile SingularAttribute<Course, ERoom> room;
 	public static volatile SingularAttribute<Course, Integer> capacity;
