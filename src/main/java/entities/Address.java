@@ -1,14 +1,18 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Address implements Serializable {
     
     @Id
-    private String ID;
+    @Column(name="Id")
+    private int ID;
     private String street;
     private String houseNumber;
     private String zipCode;
@@ -18,7 +22,7 @@ public class Address implements Serializable {
     public Address() {
     }
 
-    public Address(String ID, String street, String houseNumber, String zipCode, String city, String country) {
+    public Address(int ID, String street, String houseNumber, String zipCode, String city, String country) {
         this.ID = ID;
         this.street = street;
         this.houseNumber = houseNumber;
@@ -28,11 +32,11 @@ public class Address implements Serializable {
     }
     
     // Getter and Setter
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

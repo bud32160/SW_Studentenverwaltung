@@ -2,21 +2,25 @@ package entities;
 
 import enumerations.EAquisition;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Major implements Serializable {
     
     @Id
-    private String ID;
+    @Column(name="Id")
+    private int ID;
     private String description;
     private EAquisition aquisition;
 
     public Major() {
     }
 
-    public Major(String ID, String description, EAquisition aquisition) {
+    public Major(int ID, String description, EAquisition aquisition) {
         this.ID = ID;
         this.description = description;
         this.aquisition = aquisition;
@@ -24,11 +28,11 @@ public class Major implements Serializable {
     
     // Getter and setter
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

@@ -3,19 +3,23 @@ package entities;
 import enumerations.EAquisition;
 import enumerations.ERole;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Student implements Serializable {
     
     @Id
-    private String ID;
+    @Column(name="Id")
+    private int ID;
     private String userId;
     private String matrikelNumber;
     private String firstName;
     private String lastName;
-    private Address address;
+    private int addressId;
     private Major major;
     private EAquisition aquisition;
     private ERole eRole;
@@ -23,24 +27,24 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public Student(String ID, String userId, String matrikelNumber, String firstName, String lastName, Address address, Major major, EAquisition aquisition, ERole eRole) {
+    public Student(int ID, String userId, String matrikelNumber, String firstName, String lastName, int addressId, Major major, EAquisition aquisition, ERole eRole) {
         this.ID = ID;
         this.userId = userId;
         this.matrikelNumber = matrikelNumber;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
+        this.addressId = addressId;
         this.major = major;
         this.aquisition = aquisition;
         this.eRole = eRole;
     }
     
     // Getter and setter
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
@@ -76,12 +80,12 @@ public class Student implements Serializable {
         this.lastName = lastName;
     }
 
-    public Address getAddress() {
-        return address;
+    public int getAddressId() {
+        return addressId;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 
     public Major getMajor() {

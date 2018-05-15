@@ -1,15 +1,19 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class User implements Serializable {
     
     @Id
-    private String ID;
-    private String roleUserId;
+    @Column(name="Id")
+    private int ID;
+    private int roleUserId;
     private String userName;
     private String password;
     private String mailAddress;
@@ -17,7 +21,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String ID, String roleUserId, String userName, String password, String mailAddress) {
+    public User(int ID, int roleUserId, String userName, String password, String mailAddress) {
         this.ID = ID;
         this.roleUserId = roleUserId;
         this.userName = userName;
@@ -26,19 +30,19 @@ public class User implements Serializable {
     }
     
     // Getter and setter
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
-    public String getRoleUserId() {
+    public int getRoleUserId() {
         return roleUserId;
     }
 
-    public void setRoleUserId(String roleUserId) {
+    public void setRoleUserId(int roleUserId) {
         this.roleUserId = roleUserId;
     }
 

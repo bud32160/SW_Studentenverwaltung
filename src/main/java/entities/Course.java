@@ -3,15 +3,18 @@ package entities;
 import enumerations.ERoom;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Course implements Serializable {
     
     @Id
-    private String ID;
+    @Column(name="Id")
+    private int ID;
     private String description;
     private String majorId;
     private String instructor;
@@ -24,7 +27,7 @@ public class Course implements Serializable {
     public Course() {
     }
 
-    public Course(String ID, String description, String majorId, String instructor, String time, Date date, ERoom room, int capacity) {
+    public Course(int ID, String description, String majorId, String instructor, String time, Date date, ERoom room, int capacity) {
         this.ID = ID;
         this.description = description;
         this.majorId = majorId;
@@ -36,11 +39,11 @@ public class Course implements Serializable {
     }
 
     // Getter and setter
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

@@ -2,14 +2,18 @@ package entities;
 
 import enumerations.ERole;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Administrator implements Serializable {
     
     @Id
-    private String ID;
+    @Column(name="Id")
+    private int ID;
     private String userId;
     private ERole role;
     
@@ -17,18 +21,18 @@ public class Administrator implements Serializable {
         
     }
 
-    public Administrator(String ID, String userId, ERole role) {
+    public Administrator(int ID, String userId, ERole role) {
         this.ID = ID;
         this.userId = userId;
         this.role = role;
     }
     
     // Getter and setter
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
