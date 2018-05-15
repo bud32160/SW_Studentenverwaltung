@@ -5,14 +5,14 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import services.AdministrationService;
+import services.AccountService;
 
 @Named
 @SessionScoped
 public class AccountModel implements Serializable {
     
     @Inject
-    private AdministrationService administrationService;
+    private AccountService accountService;
     
     private int ID;
     private int roleUserId;
@@ -22,7 +22,7 @@ public class AccountModel implements Serializable {
     
     public void createUser(){
         // Serviceabhängigkeit
-        administrationService.createUserAccount(new User(this.ID, this.roleUserId, this.username,
+        accountService.createUserAccount(new User(this.ID, this.roleUserId, this.username,
                 this.password, this.mailAdress));
     }
 

@@ -9,14 +9,14 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import services.StudentService;
+import services.AdministrationService;
 
 @Named
 @SessionScoped
 public class StudentModel implements Serializable {
     
     @Inject
-    private StudentService studentService;
+    private AdministrationService administrationService;
     
     private int studentID;
     private String userId;
@@ -35,9 +35,8 @@ public class StudentModel implements Serializable {
     private String country;
     
     public void createStudent(){
-        
-        
-        studentService.createStudent(new Address(this.addressID, this.street, this.houseNumber, this.zipCode, this.city, this.country),
+    
+        administrationService.createStudent(new Address(this.addressID, this.street, this.houseNumber, this.zipCode, this.city, this.country),
                 new Student(this.studentID, this.userId, this.matrikelNumber, this.firstName, this.lastName, this.addressID, this.major, this.aquisition, this.eRole));
     }
 

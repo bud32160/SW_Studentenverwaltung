@@ -1,20 +1,21 @@
-package entities;
+package models;
 
+import entities.Exam;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import services.AdministrationService;
 
-@Entity
-public class Exam implements Serializable {
+@Named
+@SessionScoped
+public class ExamModel implements Serializable {
     
-    @Id
-    @Column(name="Id")
-    private int ID;
+    @Inject
+    private AdministrationService administrationService;
+    
+    private int examID;
     private String courseId;
     private String time;
     private Date date;
@@ -22,27 +23,25 @@ public class Exam implements Serializable {
     private int roomId;
     // private List<String> participants;
     private int capacity;
-
-    public Exam() {
-    }
-
-    public Exam(int ID, String courseId, String time, Date date, String instructor, int roomId, int capacity) {
-        this.ID = ID;
-        this.courseId = courseId;
-        this.time = time;
-        this.date = date;
-        this.instructor = instructor;
-        this.roomId = roomId;
-        this.capacity = capacity;
-    }
     
-    // Getter and setter
-    public int getID() {
-        return ID;
+    public void createExam(){
+        administrationService.createExam(new Exam(this.examID, this.courseId, this.time, this.date, this.instructor, this.roomId, this.capacity));
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public AdministrationService getAdministrationService() {
+        return administrationService;
+    }
+
+    public void setAdministrationService(AdministrationService administrationService) {
+        this.administrationService = administrationService;
+    }
+
+    public int getExamID() {
+        return examID;
+    }
+
+    public void setExamID(int examID) {
+        this.examID = examID;
     }
 
     public String getCourseId() {
@@ -92,5 +91,5 @@ public class Exam implements Serializable {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-  
+
 }

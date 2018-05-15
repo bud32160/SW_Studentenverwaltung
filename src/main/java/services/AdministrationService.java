@@ -1,7 +1,10 @@
 package services;
 
-import entities.Administrator;
-import entities.User;
+import entities.Address;
+import entities.Course;
+import entities.Exam;
+import entities.Room;
+import entities.Student;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,13 +17,24 @@ public class AdministrationService {
     private EntityManager em;
     
     @Transactional
-    public void createUserAccount(User user){
-        em.persist(user);
+    public void createStudent(Address address, Student student){
+        em.persist(address);
+        em.persist(student);
     }
     
-    public void createAdminAccount(Administrator administrator){
-        em.persist(administrator);
-        
+    @Transactional
+    public void createCourse(Course course){
+        em.persist(course);
+    }
+    
+    @Transactional
+    public void createRoom(Room room){
+        em.persist(room);
+    }
+    
+    @Transactional
+    public void createExam(Exam exam){
+        em.persist(exam);
     }
   
 }

@@ -1,49 +1,48 @@
-package entities;
+package models;
 
+import entities.Course;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import services.AdministrationService;
 
-@Entity
-public class Course implements Serializable {
+@Named
+@SessionScoped
+public class CourseModel implements Serializable {
     
-    @Id
-    @Column(name="Id")
-    private int ID;
+    @Inject
+    private AdministrationService administrationService;
+    
+    private int courseID;
     private String description;
     private int majorId;
     private String instructor;
     private String time;
     private Date date;
     private int roomId;
-    // private List<String> participants;
     private int capacity;
-
-    public Course() {
+    
+    public void createCourse(){
+        
+        administrationService.createCourse(new Course(this.courseID, this.description, this.majorId, this.instructor, this.time, this.date, this.roomId, this.capacity));
     }
 
-    public Course(int ID, String description, int majorId, String instructor, String time, Date date, int roomId, int capacity) {
-        this.ID = ID;
-        this.description = description;
-        this.majorId = majorId;
-        this.instructor = instructor;
-        this.time = time;
-        this.date = date;
-        this.roomId = roomId;
-        this.capacity = capacity;
+    public AdministrationService getAdministrationService() {
+        return administrationService;
     }
 
-    // Getter and setter
-    public int getID() {
-        return ID;
+    public void setAdministrationService(AdministrationService administrationService) {
+        this.administrationService = administrationService;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public int getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(int courseID) {
+        this.courseID = courseID;
     }
 
     public String getDescription() {
@@ -101,5 +100,5 @@ public class Course implements Serializable {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-   
+  
 }
