@@ -25,6 +25,12 @@ public class AccountModel implements Serializable {
         accountService.createUserAccount(new User(this.ID, this.roleUserId, this.username,
                 this.password, this.mailAdress));
     }
+    
+    public String logIn(){
+        String result = accountService.logIn(new User(this.username, this.password));
+    
+        return result;
+    }
 
     public int getID() {
         return ID;
