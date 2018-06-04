@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <h:outputStylesheet library="css" name="mainPage.css" />
+        
+        <title>S-Cone - Verwaltung</title>
+    </h:head>
+    
+    <div class="top-menue">
+         <h:form id="top-menue" prependId="false">
+            <h:graphicImage id="logo" library="img" name="OthLogo.png" />
+            <br/>
+            <h:outputLabel id="signed-in-text" value="Sie sind angemeldet als: " for="username" />
+            <h:outputLabel value="#{accountModel.getUsername()}" />
+        </h:form> 
+    </div>
+    
+    <div class="split-bar" />
+    
+    <div class="main-container">
+         <div class="side-menue">
+            <h:form id="side-menue" prependId="false">
+                <p:menubar>
+                    <p:submenu label="Kursübersicht">
+                        <p:menuitem value="Übersicht" />
+                        <p:menuitem value="Angemeldete Kurse" />
+                        <p:menuitem value="Angebot" />
+                    </p:submenu>
+                    <p:submenu label="Prüfungsverwaltung">
+                        <p:menuitem value="Übersicht" />
+                        <p:menuitem value="Angemeldete Prüfungen" />
+                        <p:menuitem value="Anmeldung" />
+                    </p:submenu>
+                    <p:submenu label="Literaturverwaltung">
+                        <p:menuitem value="Übersicht" />
+                        <p:menuitem value="Historie" />
+                    </p:submenu>
+                </p:menubar>
+            </h:form>
+        </div>
+    
+        <div class="main-content">
+            <h:form id="main-content" prependId="false">
+                <p>hallo</p>
+            </h:form>
+        </div>
+    </div>
+
+    <div class="split-bar" />
+    
+    <div class="submenu-end" />
+</html>
+
