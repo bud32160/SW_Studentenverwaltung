@@ -24,7 +24,7 @@ public class RoomModel implements Serializable {
         
         //TODO : Create enum ERoomDescriptor
         
-        administrationService.createRoom(new Room(this.ID, this.descriptor, this.number, this.capacity));
+        administrationService.createRoom(new Room(this.descriptor, this.number, this.capacity));
     }
 
     public AdministrationService getAdministrationService() {

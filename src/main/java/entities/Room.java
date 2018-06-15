@@ -19,6 +19,12 @@ public class Room implements Serializable{
     public Room() {
         
     }
+    
+    public Room(ERoomDescriptor descriptor, String number, int capacity) {
+        this.descriptor = descriptor;
+        this.number = number;
+        this.capacity = capacity;
+    }
 
     public Room(Long ID, ERoomDescriptor descriptor, String number, int capacity) {
         this.ID = ID;

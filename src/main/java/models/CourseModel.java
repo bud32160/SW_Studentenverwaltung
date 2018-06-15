@@ -32,7 +32,7 @@ public class CourseModel implements Serializable {
     
     public void createCourse(Room room){
         
-        administrationService.createCourse(new Course(this.courseID, this.description, this.majorId, this.instructor, this.time, this.date, room.getID(), this.capacity));
+        administrationService.createCourse(new Course(this.description, this.majorId, this.instructor, this.time, this.date, room.getID(), this.capacity));
     }
     
     public List<Course> getAllCourse(){

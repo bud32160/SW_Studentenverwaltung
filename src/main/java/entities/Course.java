@@ -23,6 +23,16 @@ public class Course implements Serializable {
 
     public Course() {
     }
+    
+    public Course(String description, Long majorId, String instructor, String time, Date date, Long roomId, int capacity) {
+        this.description = description;
+        this.majorId = majorId;
+        this.instructor = instructor;
+        this.time = time;
+        this.date = date;
+        this.roomId = roomId;
+        this.capacity = capacity;
+    }
 
     public Course(Long ID, String description, Long majorId, String instructor, String time, Date date, Long roomId, int capacity) {
         this.ID = ID;
