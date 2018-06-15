@@ -1,23 +1,29 @@
 package models;
 
 import entities.Course;
+import entities.Student;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import services.AdministrationService;
+import services.CourseService;
 
 @Named
 @SessionScoped
 public class CourseModel implements Serializable {
     
     @Inject
+    private CourseService courseService;
+    
+    @Inject
     private AdministrationService administrationService;
     
-    private int courseID;
+    private Long courseID;
     private String description;
-    private int majorId;
+    private Long majorId;
     private String instructor;
     private String time;
     private Date date;
@@ -25,8 +31,11 @@ public class CourseModel implements Serializable {
     private int capacity;
     
     public void createCourse(){
-        
         administrationService.createCourse(new Course(this.courseID, this.description, this.majorId, this.instructor, this.time, this.date, this.roomId, this.capacity));
+    }
+    
+    public List<Course> getAllCourse(){
+        return courseService.getAllCourse();
     }
 
     public AdministrationService getAdministrationService() {
@@ -37,11 +46,11 @@ public class CourseModel implements Serializable {
         this.administrationService = administrationService;
     }
 
-    public int getCourseID() {
+    public Long getCourseID() {
         return courseID;
     }
 
-    public void setCourseID(int courseID) {
+    public void setCourseID(Long courseID) {
         this.courseID = courseID;
     }
 
@@ -53,11 +62,11 @@ public class CourseModel implements Serializable {
         this.description = description;
     }
 
-    public int getMajorId() {
+    public Long getMajorId() {
         return majorId;
     }
 
-    public void setMajorId(int majorId) {
+    public void setMajorId(Long majorId) {
         this.majorId = majorId;
     }
 

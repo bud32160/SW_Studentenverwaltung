@@ -14,10 +14,10 @@ public class User implements Serializable {
     
     @Id
     @Column(name="Id")
-    private int ID;
+    private Long ID;
     
     @Column(name="RoleUserId")
-    private int roleUserId;
+    private Long roleUserId;
     
     @Column(name="Username")
     private String userName;
@@ -36,7 +36,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public User(int ID, int roleUserId, String userName, String password, String mailAddress) {
+    public User(Long ID, Long roleUserId, String userName, String password, String mailAddress) {
         this.ID = ID;
         this.roleUserId = roleUserId;
         this.userName = userName;
@@ -45,19 +45,19 @@ public class User implements Serializable {
     }
     
     // Getter and setter
-    public int getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 
-    public int getRoleUserId() {
+    public Long getRoleUserId() {
         return roleUserId;
     }
 
-    public void setRoleUserId(int roleUserId) {
+    public void setRoleUserId(Long roleUserId) {
         this.roleUserId = roleUserId;
     }
 

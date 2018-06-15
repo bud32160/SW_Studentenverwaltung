@@ -14,19 +14,19 @@ public class Exam implements Serializable {
     
     @Id
     @Column(name="Id")
-    private int ID;
-    private String courseId;
+    private Long ID;
+    private Long courseId;
     private String time;
     private Date date;
     private String instructor;
-    private int roomId;
+    private Long roomId;
     // private List<String> participants;
     private int capacity;
 
     public Exam() {
     }
 
-    public Exam(int ID, String courseId, String time, Date date, String instructor, int roomId, int capacity) {
+    public Exam(Long ID, Long courseId, String time, Date date, String instructor, Long roomId, int capacity) {
         this.ID = ID;
         this.courseId = courseId;
         this.time = time;
@@ -37,19 +37,19 @@ public class Exam implements Serializable {
     }
     
     // Getter and setter
-    public int getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 
-    public String getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(String courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 
@@ -77,11 +77,11 @@ public class Exam implements Serializable {
         this.instructor = instructor;
     }
 
-    public int getRoomId() {
+    public Long getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(Long roomId) {
         this.roomId = roomId;
     }
 

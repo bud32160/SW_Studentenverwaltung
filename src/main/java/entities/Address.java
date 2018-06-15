@@ -12,7 +12,7 @@ public class Address implements Serializable {
     
     @Id
     @Column(name="Id")
-    private int ID;
+    private Long ID;
     private String street;
     private String houseNumber;
     private String zipCode;
@@ -22,7 +22,7 @@ public class Address implements Serializable {
     public Address() {
     }
 
-    public Address(int ID, String street, String houseNumber, String zipCode, String city, String country) {
+    public Address(Long ID, String street, String houseNumber, String zipCode, String city, String country) {
         this.ID = ID;
         this.street = street;
         this.houseNumber = houseNumber;
@@ -32,11 +32,11 @@ public class Address implements Serializable {
     }
     
     // Getter and Setter
-    public int getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 

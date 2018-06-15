@@ -11,7 +11,7 @@ public class Room implements Serializable{
     
     @Id
     @Column(name="Id")
-    private int ID;
+    private Long ID;
     private ERoomDescriptor descriptor;
     private String number;
     private int capacity;
@@ -20,7 +20,7 @@ public class Room implements Serializable{
         
     }
 
-    public Room(int ID, ERoomDescriptor descriptor, String number, int capacity) {
+    public Room(Long ID, ERoomDescriptor descriptor, String number, int capacity) {
         this.ID = ID;
         this.descriptor = descriptor;
         this.number = number;
@@ -28,11 +28,11 @@ public class Room implements Serializable{
     }
     
     // Getter and setter
-    public int getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 

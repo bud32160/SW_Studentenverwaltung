@@ -5,8 +5,6 @@ import enumerations.ERole;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -14,12 +12,12 @@ public class Student implements Serializable {
     
     @Id
     @Column(name="Id")
-    private int ID;
-    private String userId;
+    private Long ID;
+    private Long userId;
     private String matrikelNumber;
     private String firstName;
     private String lastName;
-    private int addressId;
+    private Long addressId;
     private Major major;
     private EAquisition aquisition;
     private ERole eRole;
@@ -27,7 +25,7 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public Student(int ID, String userId, String matrikelNumber, String firstName, String lastName, int addressId, Major major, EAquisition aquisition, ERole eRole) {
+    public Student(Long ID, Long userId, String matrikelNumber, String firstName, String lastName, Long addressId, Major major, EAquisition aquisition, ERole eRole) {
         this.ID = ID;
         this.userId = userId;
         this.matrikelNumber = matrikelNumber;
@@ -40,19 +38,19 @@ public class Student implements Serializable {
     }
     
     // Getter and setter
-    public int getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -80,11 +78,11 @@ public class Student implements Serializable {
         this.lastName = lastName;
     }
 
-    public int getAddressId() {
+    public Long getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(int addressId) {
+    public void setAddressId(Long addressId) {
         this.addressId = addressId;
     }
 

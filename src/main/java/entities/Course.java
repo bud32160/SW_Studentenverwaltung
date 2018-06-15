@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -13,9 +11,9 @@ public class Course implements Serializable {
     
     @Id
     @Column(name="Id")
-    private int ID;
+    private Long ID;
     private String description;
-    private int majorId;
+    private Long majorId;
     private String instructor;
     private String time;
     private Date date;
@@ -26,7 +24,7 @@ public class Course implements Serializable {
     public Course() {
     }
 
-    public Course(int ID, String description, int majorId, String instructor, String time, Date date, int roomId, int capacity) {
+    public Course(Long ID, String description, Long majorId, String instructor, String time, Date date, int roomId, int capacity) {
         this.ID = ID;
         this.description = description;
         this.majorId = majorId;
@@ -38,11 +36,11 @@ public class Course implements Serializable {
     }
 
     // Getter and setter
-    public int getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 
@@ -54,11 +52,11 @@ public class Course implements Serializable {
         this.description = description;
     }
 
-    public int getMajorId() {
+    public Long getMajorId() {
         return majorId;
     }
 
-    public void setMajorId(int majorId) {
+    public void setMajorId(Long majorId) {
         this.majorId = majorId;
     }
 

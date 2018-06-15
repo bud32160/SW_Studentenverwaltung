@@ -15,12 +15,12 @@ public class ExamModel implements Serializable {
     @Inject
     private AdministrationService administrationService;
     
-    private int examID;
-    private String courseId;
+    private Long examID;
+    private Long courseId;
     private String time;
     private Date date;
     private String instructor;
-    private int roomId;
+    private Long roomId;
     // private List<String> participants;
     private int capacity;
     
@@ -36,19 +36,19 @@ public class ExamModel implements Serializable {
         this.administrationService = administrationService;
     }
 
-    public int getExamID() {
+    public Long getExamID() {
         return examID;
     }
 
-    public void setExamID(int examID) {
+    public void setExamID(Long examID) {
         this.examID = examID;
     }
 
-    public String getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(String courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 
@@ -76,11 +76,11 @@ public class ExamModel implements Serializable {
         this.instructor = instructor;
     }
 
-    public int getRoomId() {
+    public Long getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(Long roomId) {
         this.roomId = roomId;
     }
 

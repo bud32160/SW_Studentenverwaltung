@@ -13,14 +13,14 @@ public class Major implements Serializable {
     
     @Id
     @Column(name="Id")
-    private int ID;
+    private Long ID;
     private String description;
     private EAquisition aquisition;
 
     public Major() {
     }
 
-    public Major(int ID, String description, EAquisition aquisition) {
+    public Major(Long ID, String description, EAquisition aquisition) {
         this.ID = ID;
         this.description = description;
         this.aquisition = aquisition;
@@ -28,11 +28,11 @@ public class Major implements Serializable {
     
     // Getter and setter
 
-    public int getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 

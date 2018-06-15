@@ -18,8 +18,8 @@ public class StudentModel implements Serializable {
     @Inject
     private AdministrationService administrationService;
     
-    private int studentID;
-    private String userId;
+    private Long studentID;
+    private Long userId;
     private String matrikelNumber;
     private String firstName;
     private String lastName;
@@ -27,7 +27,7 @@ public class StudentModel implements Serializable {
     private EAquisition aquisition;
     private ERole eRole;
     
-    private int addressID;
+    private Long addressID;
     private String street;
     private String houseNumber;
     private String zipCode;
@@ -36,23 +36,25 @@ public class StudentModel implements Serializable {
     
     public void createStudent(){
     
-        administrationService.createStudent(new Address(this.addressID, this.street, this.houseNumber, this.zipCode, this.city, this.country),
-                new Student(this.studentID, this.userId, this.matrikelNumber, this.firstName, this.lastName, this.addressID, this.major, this.aquisition, this.eRole));
+        administrationService.createStudent(new Student(
+                this.studentID, this.userId, this.matrikelNumber, this.firstName, this.lastName, this.addressID, this.major, this.aquisition, this.eRole),
+                new Address(this.addressID, this.street, this.houseNumber, this.zipCode, this.city, this.country)
+                );
     }
 
-    public int getStudentID() {
+    public Long getStudentID() {
         return studentID;
     }
 
-    public void setStudentID(int studentID) {
+    public void setStudentID(Long studentID) {
         this.studentID = studentID;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -104,11 +106,11 @@ public class StudentModel implements Serializable {
         this.eRole = eRole;
     }
 
-    public int getAddressID() {
+    public Long getAddressID() {
         return addressID;
     }
 
-    public void setAddressID(int addressID) {
+    public void setAddressID(Long addressID) {
         this.addressID = addressID;
     }
 

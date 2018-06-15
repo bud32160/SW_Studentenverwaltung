@@ -1,5 +1,6 @@
 package models;
 
+import controller.LogInController;
 import entities.User;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
@@ -14,8 +15,11 @@ public class AccountModel implements Serializable {
     @Inject
     private AccountService accountService;
     
-    private int ID;
-    private int roleUserId;
+    @Inject
+    private LogInController logInController;
+    
+    private Long ID;
+    private Long roleUserId;
     private String username;
     private String password;
     private String mailAdress;
@@ -27,24 +31,31 @@ public class AccountModel implements Serializable {
     }
     
     public String logIn(){
-        String result = accountService.logIn(new User(this.username, this.password));
+        String result = logInController.logIn(this);
     
         return result;
     }
+    
+    public String logOut(){
+		
+        String result = logInController.logOut();
+        
+        return result;
+    }
 
-    public int getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 
-    public int getRoleUserId() {
+    public Long getRoleUserId() {
         return roleUserId;
     }
 
-    public void setRoleUserId(int roleUserId) {
+    public void setRoleUserId(Long roleUserId) {
         this.roleUserId = roleUserId;
     }
 

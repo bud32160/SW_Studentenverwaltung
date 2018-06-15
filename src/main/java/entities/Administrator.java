@@ -13,7 +13,7 @@ public class Administrator implements Serializable {
     
     @Id
     @Column(name="Id")
-    private int ID;
+    private Long ID;
     private String userId;
     private ERole role;
     
@@ -21,18 +21,18 @@ public class Administrator implements Serializable {
         
     }
 
-    public Administrator(int ID, String userId, ERole role) {
+    public Administrator(Long ID, String userId, ERole role) {
         this.ID = ID;
         this.userId = userId;
         this.role = role;
     }
     
     // Getter and setter
-    public int getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 
