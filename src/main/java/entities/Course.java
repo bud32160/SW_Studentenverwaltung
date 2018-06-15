@@ -17,14 +17,14 @@ public class Course implements Serializable {
     private String instructor;
     private String time;
     private Date date;
-    private int roomId;
+    private Long roomId;
     // private List<String> participants;
     private int capacity;
 
     public Course() {
     }
 
-    public Course(Long ID, String description, Long majorId, String instructor, String time, Date date, int roomId, int capacity) {
+    public Course(Long ID, String description, Long majorId, String instructor, String time, Date date, Long roomId, int capacity) {
         this.ID = ID;
         this.description = description;
         this.majorId = majorId;
@@ -84,11 +84,11 @@ public class Course implements Serializable {
         this.date = date;
     }
 
-    public int getRoomId() {
+    public Long getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(Long roomId) {
         this.roomId = roomId;
     }
 

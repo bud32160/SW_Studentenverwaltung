@@ -1,7 +1,7 @@
 package models;
 
 import entities.Course;
-import entities.Student;
+import entities.Room;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -27,11 +27,12 @@ public class CourseModel implements Serializable {
     private String instructor;
     private String time;
     private Date date;
-    private int roomId;
+    private Long roomId;
     private int capacity;
     
-    public void createCourse(){
-        administrationService.createCourse(new Course(this.courseID, this.description, this.majorId, this.instructor, this.time, this.date, this.roomId, this.capacity));
+    public void createCourse(Room room){
+        
+        administrationService.createCourse(new Course(this.courseID, this.description, this.majorId, this.instructor, this.time, this.date, room.getID(), this.capacity));
     }
     
     public List<Course> getAllCourse(){
@@ -94,11 +95,11 @@ public class CourseModel implements Serializable {
         this.date = date;
     }
 
-    public int getRoomId() {
+    public Long getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(Long roomId) {
         this.roomId = roomId;
     }
 
