@@ -6,6 +6,7 @@ import entities.Exam;
 import entities.Room;
 import entities.Student;
 import entities.User;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -32,11 +33,15 @@ public class AdministrationService {
     
     @Transactional
     public void createCourse(Course course){
+        course.setID(createCourseId());
+        
         em.persist(course);
     }
     
     @Transactional
     public void createRoom(Room room){
+        room.setID(createRoomId());
+        
         em.persist(room);
     }
     
@@ -106,17 +111,66 @@ public class AdministrationService {
             String selectCommand = "SELECT u FROM USER AS u WHERE id = " + id;
             TypedQuery<User> query = em.createQuery(selectCommand, User.class);
         
-            List<User> userList = query.getResultList();
-            if(userList.size() > 0){
-                id = createIdNumber();
-            }
-            else{
+            List<User> list = query.getResultList();
+            if(list == null || list.size() <= 0){
                 idIsUnique = true;
+            }
+            else {
+                id = createIdNumber();
             }
         }
         
         return id;
     }
+    
+    private Long createCourseId() {
+        boolean idIsUnique = false;
+        Long id = createIdNumber();
+        
+        // Check if Id is already used
+        while(!idIsUnique){
+            String selectCommand = "SELECT c FROM COURSE AS c WHERE id = " + id;
+            TypedQuery<Course> query = em.createQuery(selectCommand, Course.class);
+        
+            List<Course> list = query.getResultList();
+            if(list == null){
+                idIsUnique = true;
+            }
+            else if(list.size() <= 0){
+                idIsUnique = true;
+            }
+            else {
+                id = createIdNumber();
+            }
+        }
+        
+        return id;
+    }
+    
+    private Long createRoomId() {
+        boolean idIsUnique = false;
+        Long id = createIdNumber();
+        
+        // Check if Id is already used
+        while(!idIsUnique){
+            String selectCommand = "SELECT r FROM ROOM AS r WHERE id = " + id;
+            TypedQuery<Room> query = em.createQuery(selectCommand, Room.class);
+        
+            List<Room> list = query.getResultList();
+            if(list == null){
+                idIsUnique = true;
+            }
+            else if(list.size() <= 0){
+                idIsUnique = true;
+            }
+            else {
+                id = createIdNumber();
+            }
+        }
+        
+        return id;
+    }
+    
     
     private Long createIdNumber(){
         
