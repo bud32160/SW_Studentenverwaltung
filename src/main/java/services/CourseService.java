@@ -1,7 +1,13 @@
 package services;
 
 import entities.Course;
+import entities.Room;
 import entities.Student;
+import entities.User;
+import enumerations.EDay;
+import enumerations.ETime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -21,31 +27,53 @@ public class CourseService {
         String selectCommand = "SELECT c FROM COURSE AS c";
         TypedQuery<Course> query = em.createQuery(selectCommand, Course.class);
         FacesContext context = FacesContext.getCurrentInstance();
-        List<Course> courseList = null;
+        List<Course> list = null;
         
         try{
-            courseList = query.getResultList();
+            list = query.getResultList();
         } catch(NoResultException e){
             context.addMessage(null, new FacesMessage("Kein Kurs vorhanden"));
         }
         
-        return courseList;
+        return list;
     }
     
-    public String signInCourse(Student student, Course course){
-        String selectCommand = "SELECT c FROM COURSE AS c WHERE ID = " + course.getID();
-         TypedQuery<Course> query = em.createQuery(selectCommand, Course.class);
-         
-        Course c = query.getSingleResult();
+    public List<ETime> getFreeTimeSlots(Room room, EDay day){
+        List<ETime> timeList = new ArrayList<>(Arrays.asList(ETime.values()));
+        String selectCommand = "SELECT c FROM COURSE AS c WHERE roomId = " + room.getID() + " AND EDay = " + day;
+        TypedQuery<Course> query = em.createQuery(selectCommand, Course.class);
         
-        if(c.getCapacity() > 0){
-            String updateCommand = "UPDATE COURSER SET CAPACITY = " + (course.getCapacity() - 1) + " WHERE ID = " + course.getID();
+        List<Course> courseList = query.getResultList();
             
-            return "Erfolgreich eingeschrieben!";
+        // If there is no course in this room at that day
+        if(courseList == null || courseList.size() <= 0){
+            return timeList;
         }
-        else{
-            return "Einschreiben nicht möglich!";
-        }  
+        else {
+            
+            timeList = createTimeList(timeList, courseList);
+            return timeList;
+        }   
     }
+    
+    private List<ETime> createTimeList(List<ETime> timeList, List<Course> courseList){
+        
+        // return free time slots
+        for(Course course : courseList){
+            ETime time = course.getETime();
+                
+            // Remove reservated time slots
+            for(ETime t : timeList){
+                if(t.equals(time)){
+                    timeList.remove(t);
+                    break;
+                }
+            }
+        }
+            
+        return timeList;
+    }
+    
+    
     
 }

@@ -2,12 +2,17 @@ package models;
 
 import entities.Course;
 import entities.Room;
+import entities.User;
+import enumerations.EDay;
+import enumerations.ETime;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.TypedQuery;
 import services.AdministrationService;
 import services.CourseService;
 
@@ -25,14 +30,22 @@ public class CourseModel implements Serializable {
     private String description;
     private Long majorId;
     private String instructor;
-    private String time;
-    private Date date;
+    private EDay eDay;
+    private ETime eTime;
     private Long roomId;
     private int capacity;
     
     public void createCourse(Room room){
         
-        administrationService.createCourse(new Course(this.description, this.majorId, this.instructor, this.time, this.date, room.getID(), this.capacity));
+        administrationService.createCourse(new Course(this.description, this.majorId, this.instructor, this.eDay, this.eTime, room.getID(), this.capacity));
+    }
+    
+    public List<ETime> displayAvailableTimes(Room room, EDay day){
+        
+        
+        List<ETime> list = courseService.getFreeTimeSlots(room, day);
+        
+        return list;
     }
     
     public List<Course> getAllCourse(){
@@ -79,20 +92,20 @@ public class CourseModel implements Serializable {
         this.instructor = instructor;
     }
 
-    public String getTime() {
-        return time;
+    public EDay geteDay() {
+        return eDay;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void seteDay(EDay eDay) {
+        this.eDay = eDay;
     }
 
-    public Date getDate() {
-        return date;
+    public ETime geteTime() {
+        return eTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void seteTime(ETime eTime) {
+        this.eTime = eTime;
     }
 
     public Long getRoomId() {

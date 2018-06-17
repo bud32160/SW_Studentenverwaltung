@@ -1,6 +1,6 @@
 package enumerations;
 
-public enum EDayHandling {
+public enum EDay {
     
     MO,
     TU,

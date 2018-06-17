@@ -1,5 +1,7 @@
 package entities;
 
+import enumerations.EDay;
+import enumerations.ETime;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -15,8 +17,8 @@ public class Course implements Serializable {
     private String description;
     private Long majorId;
     private String instructor;
-    private String time;
-    private Date date;
+    private EDay eDay;
+    private ETime eTime;
     private Long roomId;
     // private List<String> participants;
     private int capacity;
@@ -24,23 +26,23 @@ public class Course implements Serializable {
     public Course() {
     }
     
-    public Course(String description, Long majorId, String instructor, String time, Date date, Long roomId, int capacity) {
+    public Course(String description, Long majorId, String instructor, EDay day, ETime time, Long roomId, int capacity) {
         this.description = description;
         this.majorId = majorId;
         this.instructor = instructor;
-        this.time = time;
-        this.date = date;
+        this.eDay = day;
+        this.eTime = time;
         this.roomId = roomId;
         this.capacity = capacity;
     }
 
-    public Course(Long ID, String description, Long majorId, String instructor, String time, Date date, Long roomId, int capacity) {
+    public Course(Long ID, String description, Long majorId, String instructor, EDay day, ETime time, Long roomId, int capacity) {
         this.ID = ID;
         this.description = description;
         this.majorId = majorId;
         this.instructor = instructor;
-        this.time = time;
-        this.date = date;
+        this.eDay = day;
+        this.eTime = time;
         this.roomId = roomId;
         this.capacity = capacity;
     }
@@ -78,22 +80,22 @@ public class Course implements Serializable {
         this.instructor = instructor;
     }
 
-    public String getTime() {
-        return time;
+    public EDay getEDay() {
+        return eDay;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setEDay(EDay eDay) {
+        this.eDay = eDay;
     }
 
-    public Date getDate() {
-        return date;
+    public ETime getETime() {
+        return eTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setETime(ETime eTime) {
+        this.eTime = eTime;
     }
-
+    
     public Long getRoomId() {
         return roomId;
     }

@@ -1,7 +1,7 @@
 package enumerations;
 
 
-public enum ETimeHandling {
+public enum ETime {
     
     FIRST,
     SECOND,
