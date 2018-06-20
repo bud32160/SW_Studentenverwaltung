@@ -2,19 +2,17 @@ package models;
 
 import entities.Course;
 import entities.Room;
-import entities.User;
+import entities.Student;
 import enumerations.EDay;
 import enumerations.ETime;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.TypedQuery;
 import services.AdministrationService;
 import services.CourseService;
+import services.StudentService;
 
 @Named
 @SessionScoped
@@ -22,6 +20,9 @@ public class CourseModel implements Serializable {
     
     @Inject
     private CourseService courseService;
+    
+    @Inject
+    private StudentService studentService;
     
     @Inject
     private AdministrationService administrationService;
@@ -34,6 +35,9 @@ public class CourseModel implements Serializable {
     private ETime eTime;
     private Long roomId;
     private int capacity;
+    
+    private Course currentCourse;
+    private Student currentStudent;
     
     public void createCourse(Room room){
         
@@ -50,6 +54,11 @@ public class CourseModel implements Serializable {
     
     public List<Course> getAllCourse(){
         return courseService.getAllCourse();
+    }
+    
+    public void signInStudent(){
+        
+        studentService.signInCourse(this.currentStudent, this.courseID);
     }
 
     public AdministrationService getAdministrationService() {
@@ -123,5 +132,21 @@ public class CourseModel implements Serializable {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-  
+
+    public CourseService getCourseService() {
+        return courseService;
+    }
+
+    public void setCourseService(CourseService courseService) {
+        this.courseService = courseService;
+    }
+
+    public Course getCurrentCourse() {
+        return currentCourse;
+    }
+
+    public void setCurrentCourse(Course currentCourse) {
+        this.currentCourse = currentCourse;
+    }
+
 }
