@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -8,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class Exam implements Serializable {
@@ -20,7 +24,10 @@ public class Exam implements Serializable {
     private Date date;
     private String instructor;
     private Long roomId;
-    // private List<String> participants;
+    
+    @ManyToMany(mappedBy="examList")
+    List<Student> participants;
+    
     private int capacity;
 
     public Exam() {
@@ -34,6 +41,13 @@ public class Exam implements Serializable {
         this.instructor = instructor;
         this.roomId = roomId;
         this.capacity = capacity;
+    }
+    
+    public void addParticipant(Student student){
+        if(this.participants==null)
+            this.participants = new ArrayList<>();
+        if(!this.participants.contains(student))
+            this.participants.add(student);
     }
     
     // Getter and setter
@@ -91,6 +105,15 @@ public class Exam implements Serializable {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+    
+    @XmlTransient
+    public List<Student> getParticipants() {
+        return Collections.unmodifiableList(participants);
+    }
+
+    public void setKandidaten(List<Student> participants) {
+        this.participants = participants;
     }
   
 }

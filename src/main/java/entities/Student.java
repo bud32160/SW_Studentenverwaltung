@@ -3,11 +3,18 @@ package entities;
 import enumerations.EAquisition;
 import enumerations.ERole;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 public class Student implements Serializable {
     
     @Id
@@ -21,6 +28,12 @@ public class Student implements Serializable {
     private Major major;
     private EAquisition aquisition;
     private ERole eRole;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    List<Course> courseList;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    List<Exam> examList;
 
     public Student() {
     }
@@ -35,6 +48,20 @@ public class Student implements Serializable {
         this.major = major;
         this.aquisition = aquisition;
         this.eRole = eRole;
+    }
+    
+    public void addCourse(Course course){
+        if(this.courseList == null)
+            this.courseList = new ArrayList<>();
+        if(!this.courseList.contains(course))
+            this.courseList.add(course);
+    }
+    
+    public void addExam(Exam exam){
+        if(this.examList == null)
+            this.examList = new ArrayList<>();
+        if(!this.examList.contains(exam))
+            this.examList.add(exam);
     }
     
     // Getter and setter
@@ -108,6 +135,24 @@ public class Student implements Serializable {
 
     public void seteRole(ERole eRole) {
         this.eRole = eRole;
+    }
+    
+    @XmlTransient
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setPruefungen(List<Course> courseList) {
+        this.courseList = courseList;
+    }
+    
+    @XmlTransient
+    public List<Exam> getExamList() {
+        return examList;
+    }
+
+    public void setExamList(List<Exam> examList) {
+        this.examList = examList;
     }
  
 }
