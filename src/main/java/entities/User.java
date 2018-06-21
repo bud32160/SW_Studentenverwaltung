@@ -5,21 +5,20 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
+import util.SingleIdEntity;
 
 @Entity
 @Table(name="USER_TABLE")
-public class User implements Serializable {
-    
-    @Id
-    @Column(name="User_Id")
-    private int id;
+@NamedQuery(name = "User.VerificationOfExistence", query = "SELECT u FROM User AS u WHERE u.mailAddress = :mailAddress" )
+public class User extends SingleIdEntity implements Serializable {
     
     @Column(name="Username")
-    private String userName;
+    private String username;
     
     @Column(name="Password")
     private String password;
@@ -38,9 +37,8 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(int id, String userName, String password, String salt, String mailAddress, Student student) {
-        this.id = id;
-        this.userName = userName;
+    public User(String username, String password, String salt, String mailAddress, Student student) {
+        this.username = username;
         this.password = password;
         this.salt = salt;
         this.mailAddress = mailAddress;
@@ -48,20 +46,12 @@ public class User implements Serializable {
     }
     
     // Getter and setter
-    public int getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

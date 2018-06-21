@@ -14,20 +14,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapsId;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import util.SingleIdEntity;
 
 @Entity
 @Table(name="STUDENT_TABLE")
-public class Student implements Serializable {
-    
-    @Id
-    @Column(name="Student_Id")
-    private int id;
+@NamedQuery(name = "Student.VerificationOfExistence", query = "SELECT s FROM Student AS s WHERE s.mailAddress = :mailAddress" )
+public class Student extends SingleIdEntity implements Serializable {
     
     @Column(name="MatrikelNumber")
     private String matrikelNumber;
@@ -72,8 +71,7 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public Student(int id, String matrikelNumber, String firstName, String lastName, Address address, Date birthday, Major major, EAquisition aquisition, ERole eRole, User user) {
-        this.id = id;
+    public Student(String matrikelNumber, String firstName, String lastName, Address address, Date birthday, Major major, EAquisition aquisition, ERole eRole, User user) {
         this.matrikelNumber = matrikelNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -100,14 +98,6 @@ public class Student implements Serializable {
     }
     
     // Getter and setter
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getMatrikelNumber() {
         return matrikelNumber;
     }
