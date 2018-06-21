@@ -6,12 +6,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @XmlRootElement
@@ -20,39 +25,47 @@ public class Course implements Serializable {
     @Id
     @Column(name="Id")
     private Long ID;
+    
+    @Column(name="Description")
     private String description;
+    
+    @Column(name="MajorId")
     private Long majorId;
+    
+    @Column(name="Instructor")
     private String instructor;
+    
+    @Column(name="EDay")
     private EDay eDay;
+    
+    @Column(name="ETime")
     private ETime eTime;
-    private Long roomId;
     
-    @ManyToMany(mappedBy="courseList")
-    List<Student> participants;
+    @ManyToOne( cascade = CascadeType.PERSIST)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinColumn(name = "Course_Room")
+    private Room room;
     
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Students")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Student> participants;
+    
+    @Column(name="Capacity")
     private int capacity;
 
     public Course() {
     }
-    
-    public Course(String description, Long majorId, String instructor, EDay day, ETime time, Long roomId, int capacity) {
-        this.description = description;
-        this.majorId = majorId;
-        this.instructor = instructor;
-        this.eDay = day;
-        this.eTime = time;
-        this.roomId = roomId;
-        this.capacity = capacity;
-    }
 
-    public Course(Long ID, String description, Long majorId, String instructor, EDay day, ETime time, Long roomId, int capacity) {
+    public Course(Long ID, String description, Long majorId, String instructor, EDay eDay, ETime eTime, Room room, List<Student> participants, int capacity) {
         this.ID = ID;
         this.description = description;
         this.majorId = majorId;
         this.instructor = instructor;
-        this.eDay = day;
-        this.eTime = time;
-        this.roomId = roomId;
+        this.eDay = eDay;
+        this.eTime = eTime;
+        this.room = room;
+        this.participants = participants;
         this.capacity = capacity;
     }
     
@@ -96,28 +109,36 @@ public class Course implements Serializable {
         this.instructor = instructor;
     }
 
-    public EDay getEDay() {
+    public EDay geteDay() {
         return eDay;
     }
 
-    public void setEDay(EDay eDay) {
+    public void seteDay(EDay eDay) {
         this.eDay = eDay;
     }
 
-    public ETime getETime() {
+    public ETime geteTime() {
         return eTime;
     }
 
-    public void setETime(ETime eTime) {
+    public void seteTime(ETime eTime) {
         this.eTime = eTime;
     }
-    
-    public Long getRoomId() {
-        return roomId;
+
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomId(Long roomId) {
-        this.roomId = roomId;
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public List<Student> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Student> participants) {
+        this.participants = participants;
     }
 
     public int getCapacity() {
@@ -127,14 +148,5 @@ public class Course implements Serializable {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-    
-    @XmlTransient
-    public List<Student> getParticipants() {
-        return Collections.unmodifiableList(participants);
-    }
-
-    public void setKandidaten(List<Student> participants) {
-        this.participants = participants;
-    }
-   
+  
 }

@@ -4,52 +4,87 @@ import enumerations.EAquisition;
 import enumerations.ERole;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
-@XmlRootElement
+@Table(name="STUDENT_TABLE")
 public class Student implements Serializable {
     
     @Id
-    @Column(name="Id")
-    private Long ID;
-    private Long userId;
+    @Column(name="Student_Id")
+    private int id;
+    
+    @Column(name="MatrikelNumber")
     private String matrikelNumber;
+    
+    @Column(name="FirstName")
     private String firstName;
+    
+    @Column(name="LastName")
     private String lastName;
-    private Long addressId;
+    
+    @Embedded
+    private Address address ;
+    
+    @Column(name="Birthday")
+    @Temporal(TemporalType.DATE)
+    private Date birthday;
+    
+    @Column(name="Major")
     private Major major;
+    
+    @Column(name="Aquisition")
     private EAquisition aquisition;
+    
+    @Column(name="ERole")
     private ERole eRole;
     
-    @ManyToMany(fetch = FetchType.LAZY)
-    List<Course> courseList;
+    @MapsId
+    @OneToOne(mappedBy="student")
+    @JoinColumn(name="Student_Id")
+    private User user;
     
-    @ManyToMany(fetch = FetchType.LAZY)
-    List<Exam> examList;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Courses")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Course> courseList;
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Exams")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Exam> examList;
 
     public Student() {
     }
 
-    public Student(Long ID, Long userId, String matrikelNumber, String firstName, String lastName, Long addressId, Major major, EAquisition aquisition, ERole eRole) {
-        this.ID = ID;
-        this.userId = userId;
+    public Student(int id, String matrikelNumber, String firstName, String lastName, Address address, Date birthday, Major major, EAquisition aquisition, ERole eRole, User user) {
+        this.id = id;
         this.matrikelNumber = matrikelNumber;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.addressId = addressId;
+        this.address = address;
+        this.birthday = birthday;
         this.major = major;
         this.aquisition = aquisition;
         this.eRole = eRole;
+        this.user = user;
     }
-    
+
     public void addCourse(Course course){
         if(this.courseList == null)
             this.courseList = new ArrayList<>();
@@ -65,20 +100,12 @@ public class Student implements Serializable {
     }
     
     // Getter and setter
-    public Long getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMatrikelNumber() {
@@ -105,12 +132,20 @@ public class Student implements Serializable {
         this.lastName = lastName;
     }
 
-    public Long getAddressId() {
-        return addressId;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddressId(Long addressId) {
-        this.addressId = addressId;
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public Major getMajor() {
@@ -136,17 +171,23 @@ public class Student implements Serializable {
     public void seteRole(ERole eRole) {
         this.eRole = eRole;
     }
-    
-    @XmlTransient
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public List<Course> getCourseList() {
         return courseList;
     }
 
-    public void setPruefungen(List<Course> courseList) {
+    public void setCourseList(List<Course> courseList) {
         this.courseList = courseList;
     }
-    
-    @XmlTransient
+
     public List<Exam> getExamList() {
         return examList;
     }
@@ -154,5 +195,5 @@ public class Student implements Serializable {
     public void setExamList(List<Exam> examList) {
         this.examList = examList;
     }
- 
+
 }

@@ -1,64 +1,59 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-@Table(name="User")
+@Table(name="USER_TABLE")
 public class User implements Serializable {
     
     @Id
-    @Column(name="Id")
-    private Long ID;
-    
-    @Column(name="RoleUserId")
-    private Long roleUserId;
+    @Column(name="User_Id")
+    private int id;
     
     @Column(name="Username")
     private String userName;
     
     @Column(name="Password")
     private String password;
+        
+    @XmlTransient
+    @Column(name="salt")
+    private String salt;
     
-    @Column(name="Mailaddress")
+    @Column(name="MailAddress")
     private String mailAddress;
+    
+    @OneToOne(cascade = {CascadeType.ALL})
+    @PrimaryKeyJoinColumn
+    private Student student;
 
     public User() {
     }
-    
-    public User(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-    }
 
-    public User(Long ID, Long roleUserId, String userName, String password, String mailAddress) {
-        this.ID = ID;
-        this.roleUserId = roleUserId;
+    public User(int id, String userName, String password, String salt, String mailAddress, Student student) {
+        this.id = id;
         this.userName = userName;
         this.password = password;
+        this.salt = salt;
         this.mailAddress = mailAddress;
+        this.student = student;
     }
     
     // Getter and setter
-    public Long getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
-
-    public Long getRoleUserId() {
-        return roleUserId;
-    }
-
-    public void setRoleUserId(Long roleUserId) {
-        this.roleUserId = roleUserId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -77,6 +72,14 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
     public String getMailAddress() {
         return mailAddress;
     }
@@ -84,5 +87,13 @@ public class User implements Serializable {
     public void setMailAddress(String mailAddress) {
         this.mailAddress = mailAddress;
     }
-  
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+   
 }

@@ -2,28 +2,31 @@ package entities;
 
 import java.io.Serializable;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
+import util.SingleIdEntity;
 
-@Entity
-public class Address implements Serializable {
+@Embeddable
+public class Address extends SingleIdEntity implements Serializable {
     
-    @Id
-    @Column(name="Id")
-    private Long ID;
+    @Column(name="Street")
     private String street;
+    
+    @Column(name="HouseNumber")
     private String houseNumber;
+    
+    @Column(name="ZipCode")
     private String zipCode;
+    
+    @Column(name="City")
     private String city;
+    
+    @Column(name="Country")
     private String country;
 
     public Address() {
     }
 
-    public Address(Long ID, String street, String houseNumber, String zipCode, String city, String country) {
-        this.ID = ID;
+    public Address(String street, String houseNumber, String zipCode, String city, String country) {
         this.street = street;
         this.houseNumber = houseNumber;
         this.zipCode = zipCode;
@@ -32,14 +35,6 @@ public class Address implements Serializable {
     }
     
     // Getter and Setter
-    public Long getID() {
-        return ID;
-    }
-
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
-
     public String getStreet() {
         return street;
     }

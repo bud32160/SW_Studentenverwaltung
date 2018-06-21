@@ -19,15 +19,27 @@ public class Exam implements Serializable {
     @Id
     @Column(name="Id")
     private Long ID;
+    
+    @Column(name="CourseId")
     private Long courseId;
+    
+    @Column(name="Time")
     private String time;
+    
+    @Column(name="Date")
     private Date date;
+    
+    @Column(name="Instructor")
     private String instructor;
+    
+    @Column(name="RoomId")
     private Long roomId;
     
+    @Column(name="Participants")
     @ManyToMany(mappedBy="examList")
     List<Student> participants;
     
+    @Column(name="Capacity")
     private int capacity;
 
     public Exam() {

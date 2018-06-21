@@ -4,16 +4,20 @@ import enumerations.ERoomDescriptor;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Table;
+import util.SingleIdEntity;
 
 @Entity
-public class Room implements Serializable{
+@Table(name="ROOM_TABLE")
+public class Room extends SingleIdEntity implements Serializable{
     
-    @Id
-    @Column(name="Id")
-    private Long ID;
+    @Column(name="Descriptor")
     private ERoomDescriptor descriptor;
+    
+    @Column(name="Number")
     private String number;
+    
+    @Column(name="Capacity")
     private int capacity;
 
     public Room() {
@@ -25,23 +29,8 @@ public class Room implements Serializable{
         this.number = number;
         this.capacity = capacity;
     }
-
-    public Room(Long ID, ERoomDescriptor descriptor, String number, int capacity) {
-        this.ID = ID;
-        this.descriptor = descriptor;
-        this.number = number;
-        this.capacity = capacity;
-    }
     
     // Getter and setter
-    public Long getID() {
-        return ID;
-    }
-
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
-
     public ERoomDescriptor getDescriptor() {
         return descriptor;
     }

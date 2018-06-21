@@ -4,37 +4,28 @@ import enumerations.EAquisition;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Table;
+import util.SingleIdEntity;
 
 @Entity
-public class Major implements Serializable {
+@Table(name="MAJOR_TABLE")
+public class Major extends SingleIdEntity implements Serializable {
     
-    @Id
-    @Column(name="Id")
-    private Long ID;
+    @Column(name="Description")
     private String description;
+    
+    @Column(name="Aquisition")
     private EAquisition aquisition;
 
     public Major() {
     }
 
-    public Major(Long ID, String description, EAquisition aquisition) {
-        this.ID = ID;
+    public Major(String description, EAquisition aquisition) {
         this.description = description;
         this.aquisition = aquisition;
     }
     
     // Getter and setter
-
-    public Long getID() {
-        return ID;
-    }
-
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
 
     public String getDescription() {
         return description;
