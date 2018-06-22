@@ -15,65 +15,89 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import static org.hibernate.annotations.common.util.impl.LoggerFactory.logger;
 
 @SessionScoped
-public class AccountService implements Serializable {
+public class UserService implements Serializable {
     
    @PersistenceContext(unitName="StudentenverwaltungPU")
     private EntityManager em;
    
    // Algorithm String for hash function
-   private static final String algorithm = "SHA-256";
+   private static final String ALGORITHM = "SHA-256";
    
    @Inject
    private Logger logger;
    
+   @Inject
+   private StudentService studentService;
    
-    // Persists student object and creates automatically corresponding user object
-    @Transactional
-    public User signInStudent(Student student){
-        // Create automatically email address for user object
-        User user = student.getUser();
-        user.setMailAddress(createMailAddress(student));
-        
-        // Check if student is already signed in with this mailAddress
-        if(ceckIfNewAccount(user)){
-            
-            // Create cryptic password
-            String salt = this.createRandomString(32);
-            String password = this.saltAndHash(user.getPassword(), salt);
-            user.setUsername(createUserName(student));
-            user.setPassword(password);
-            user.setSalt(salt);
+   /**
+     * Creates user object depending on mapped student
+     * @param student
+     * @param userPassword
+     * @return
+     */
+   public User createUserByStudent(Student student, String userPassword){
 
-            em.persist(student);
-            em.persist(user);
+        User user = new User();
         
-            return user;
-        }
-        else{
-            
+        // Create cryptic password
+        String salt = this.createRandomString(32);
+        String password = this.saltAndHash(userPassword, salt);
+        user.setPassword(password);
+        user.setSalt(salt);
+        
+        user.setMailAddress(student.getMailAddress());
+        user.setUsername(createUserName(student));
+        user.setStudent(student);
+        
+        return user;
+   }
+    
+    /**
+     * Find a user by mailAddress
+     * @param user
+     * @return
+     */
+    public User findUserByMailAddress(User user){
+        User u = em.find(User.class, user.getMailAddress());
+        if(u == null){
+            logger.log(Level.INFO, "User does not exist");
             return null;
-        }  
+        }
+
+        return u;
     }
     
     /**
-     * Update a user
-     * @param user
-     * @return return 
+     * Find a user by student
+     * @param student
+     * @return
      */
+    public User findUserByStudent(Student student){
+        User u = em.find(User.class, student.getMailAddress());
+        if(u == null){
+            logger.log(Level.INFO, "User does not exist");
+            return null;
+        }
+
+        return u;
+    }
+    
     @Transactional
     public User updateUser(User user) {
 
         user = em.merge(user);
         em.flush();
-        logger.log(Level.INFO, "User updated: {0}", user.toString());
         return user;
     }
 
+    /**
+     * Creates the username depending on the mapped student object
+     * @param student
+     * @return
+     */
     private String createUserName(Student student) {
         char[] firstName = student.getFirstName().toCharArray();
         char[] lastName = student.getLastName().toCharArray();
@@ -95,24 +119,6 @@ public class AccountService implements Serializable {
         return (result + s2);
     }
     
-    private String createMailAddress(Student student) {
-        String firstName = student.getFirstName().toLowerCase();
-        String lastName = student.getLastName().toLowerCase();
-        String ending = "@oth-regensburg.de";
-        String matrNmbr = student.getMatrikelNumber();
-        
-        String result = firstName + "." + lastName + matrNmbr + ending;
-        
-        return result;     
-    }
-
-    private boolean ceckIfNewAccount(User user) {
-        TypedQuery<User> query = em.createNamedQuery("User.VerificationOfExistence", User.class);
-        query.setParameter("mailAddress", user.getMailAddress());
-        
-        return query.getResultList().isEmpty();
-    }
-    
     /**
      * Function to hash a passwort
      * @param password
@@ -121,7 +127,7 @@ public class AccountService implements Serializable {
      */
     public String saltAndHash(String password, String salt) {
         try {
-            MessageDigest hashAlgo = MessageDigest.getInstance(algorithm);
+            MessageDigest hashAlgo = MessageDigest.getInstance(ALGORITHM);
             String toHash = salt + "#" + password;
             byte[] output = hashAlgo.digest(toHash.getBytes("UTF-8"));
             StringBuilder passwordBuilder = new StringBuilder();
