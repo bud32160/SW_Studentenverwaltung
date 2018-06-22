@@ -5,6 +5,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -14,8 +15,15 @@ import util.SingleIdEntity;
 
 @Entity
 @Table(name="USER_TABLE")
-@NamedQuery(name = "User.VerificationOfExistence", query = "SELECT u FROM User AS u WHERE u.mailAddress = :mailAddress" )
-public class User extends SingleIdEntity implements Serializable {
+@NamedQueries({
+@NamedQuery(name = "User.getUserByMailAddress", query = "SELECT u FROM User AS u WHERE u.mailAddress = :mailAddress" ),
+@NamedQuery(name = "User.getUserByUsername", query = "SELECT u FROM User AS u WHERE u.username = :username" )
+})
+public class User implements Serializable {
+    
+    @Id
+    @Column(name="User_MailAddress")
+    private String mailAddress;
     
     @Column(name="Username")
     private String username;
@@ -26,9 +34,6 @@ public class User extends SingleIdEntity implements Serializable {
     @XmlTransient
     @Column(name="salt")
     private String salt;
-    
-    @Column(name="MailAddress")
-    private String mailAddress;
     
     @OneToOne(cascade = {CascadeType.ALL})
     @PrimaryKeyJoinColumn

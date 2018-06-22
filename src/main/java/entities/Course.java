@@ -4,33 +4,27 @@ import enumerations.EDay;
 import enumerations.ETime;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.NamedQuery;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import util.SingleIdEntity;
 
 @Entity
-@XmlRootElement
-public class Course implements Serializable {
-    
-    @Id
-    @Column(name="Id")
-    private Long ID;
+@NamedQuery(name="Course.getAllCourse", query="SELECT c FROM Course AS c")
+public class Course extends SingleIdEntity implements Serializable {
     
     @Column(name="Description")
     private String description;
     
     @Column(name="MajorId")
-    private Long majorId;
+    private int majorId;
     
     @Column(name="Instructor")
     private String instructor;
@@ -41,10 +35,8 @@ public class Course implements Serializable {
     @Column(name="ETime")
     private ETime eTime;
     
-    @ManyToOne( cascade = CascadeType.PERSIST)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "Course_Room")
-    private Room room;
+    @Column(name="RoomId")
+    private int roomId;
     
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "Students")
@@ -57,14 +49,13 @@ public class Course implements Serializable {
     public Course() {
     }
 
-    public Course(Long ID, String description, Long majorId, String instructor, EDay eDay, ETime eTime, Room room, List<Student> participants, int capacity) {
-        this.ID = ID;
+    public Course(String description, int majorId, String instructor, EDay eDay, ETime eTime, int roomId, List<Student> participants, int capacity) {
         this.description = description;
         this.majorId = majorId;
         this.instructor = instructor;
         this.eDay = eDay;
         this.eTime = eTime;
-        this.room = room;
+        this.roomId = roomId;
         this.participants = participants;
         this.capacity = capacity;
     }
@@ -77,14 +68,6 @@ public class Course implements Serializable {
     }
 
     // Getter and setter
-    public Long getID() {
-        return ID;
-    }
-
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -93,11 +76,11 @@ public class Course implements Serializable {
         this.description = description;
     }
 
-    public Long getMajorId() {
+    public int getMajorId() {
         return majorId;
     }
 
-    public void setMajorId(Long majorId) {
+    public void setMajorId(int majorId) {
         this.majorId = majorId;
     }
 
@@ -109,28 +92,28 @@ public class Course implements Serializable {
         this.instructor = instructor;
     }
 
-    public EDay geteDay() {
+    public EDay getEDay() {
         return eDay;
     }
 
-    public void seteDay(EDay eDay) {
+    public void setEDay(EDay eDay) {
         this.eDay = eDay;
     }
 
-    public ETime geteTime() {
+    public ETime getETime() {
         return eTime;
     }
 
-    public void seteTime(ETime eTime) {
+    public void setETime(ETime eTime) {
         this.eTime = eTime;
     }
 
-    public Room getRoom() {
-        return room;
+    public int getRoom() {
+        return roomId;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setRoom(int roomId) {
+        this.roomId = roomId;
     }
 
     public List<Student> getParticipants() {

@@ -3,10 +3,9 @@ package entities;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import util.SingleIdEntity;
 
 @Embeddable
-public class Address extends SingleIdEntity implements Serializable {
+public class Address implements Serializable {
     
     @Column(name="Street")
     private String street;

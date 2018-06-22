@@ -11,17 +11,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.xml.bind.annotation.XmlTransient;
+import util.SingleIdEntity;
 
 @Entity
-public class Exam implements Serializable {
-    
-    @Id
-    @Column(name="Id")
-    private Long ID;
-    
+@NamedQuery(name="Exam.getAllExams", query="SELECT e FROM Exam AS e")
+public class Exam extends SingleIdEntity implements Serializable {
+
     @Column(name="CourseId")
-    private Long courseId;
+    private int courseId;
     
     @Column(name="Time")
     private String time;
@@ -45,8 +44,7 @@ public class Exam implements Serializable {
     public Exam() {
     }
 
-    public Exam(Long ID, Long courseId, String time, Date date, String instructor, Long roomId, int capacity) {
-        this.ID = ID;
+    public Exam(int courseId, String time, Date date, String instructor, Long roomId, int capacity) {
         this.courseId = courseId;
         this.time = time;
         this.date = date;
@@ -63,19 +61,11 @@ public class Exam implements Serializable {
     }
     
     // Getter and setter
-    public Long getID() {
-        return ID;
-    }
-
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
-
-    public Long getCourseId() {
+    public int getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Long courseId) {
+    public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
 

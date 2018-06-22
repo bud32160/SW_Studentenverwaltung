@@ -1,7 +1,7 @@
 package entities;
 
 import enumerations.EAquisition;
-import enumerations.ERole;
+import enumerations.EMajor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapsId;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,8 +26,15 @@ import util.SingleIdEntity;
 
 @Entity
 @Table(name="STUDENT_TABLE")
-@NamedQuery(name = "Student.VerificationOfExistence", query = "SELECT s FROM Student AS s WHERE s.mailAddress = :mailAddress" )
+@NamedQueries({
+@NamedQuery(name = "Student.getStudentByMatrikelnumber", query = "SELECT s FROM Student AS s WHERE s.matrikelNumber = :matrikelNumber" ),
+@NamedQuery(name = "Student.getStudentByMailAddress", query = "SELECT s FROM Student AS s WHERE s.mailAddress = :mailAddress" ),
+})
 public class Student extends SingleIdEntity implements Serializable {
+    
+    @Id
+    @Column(name="Student_MailAddress")
+    private String mailAddress;
     
     @Column(name="MatrikelNumber")
     private String matrikelNumber;
@@ -45,17 +53,14 @@ public class Student extends SingleIdEntity implements Serializable {
     private Date birthday;
     
     @Column(name="Major")
-    private Major major;
+    private EMajor major;
     
     @Column(name="Aquisition")
     private EAquisition aquisition;
     
-    @Column(name="ERole")
-    private ERole eRole;
-    
     @MapsId
     @OneToOne(mappedBy="student")
-    @JoinColumn(name="Student_Id")
+    @JoinColumn(name="Student_MailAddress")
     private User user;
     
     @ManyToMany(cascade = CascadeType.ALL)
@@ -71,7 +76,16 @@ public class Student extends SingleIdEntity implements Serializable {
     public Student() {
     }
 
-    public Student(String matrikelNumber, String firstName, String lastName, Address address, Date birthday, Major major, EAquisition aquisition, ERole eRole, User user) {
+    public Student(String firstName, String lastName, Address address, Date birthday, EMajor major, EAquisition aquisition) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.birthday = birthday;
+        this.major = major;
+        this.aquisition = aquisition;
+    }
+
+    public Student(String matrikelNumber, String firstName, String lastName, Address address, Date birthday, EMajor major, EAquisition aquisition, User user) {
         this.matrikelNumber = matrikelNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -79,7 +93,6 @@ public class Student extends SingleIdEntity implements Serializable {
         this.birthday = birthday;
         this.major = major;
         this.aquisition = aquisition;
-        this.eRole = eRole;
         this.user = user;
     }
 
@@ -98,6 +111,15 @@ public class Student extends SingleIdEntity implements Serializable {
     }
     
     // Getter and setter
+    public String getMailAddress() {
+        return mailAddress;
+    }
+
+    public void setMailAddress(String mailAddress) {
+        this.mailAddress = mailAddress;
+    }
+    
+    
     public String getMatrikelNumber() {
         return matrikelNumber;
     }
@@ -138,11 +160,11 @@ public class Student extends SingleIdEntity implements Serializable {
         this.birthday = birthday;
     }
 
-    public Major getMajor() {
+    public EMajor getMajor() {
         return major;
     }
 
-    public void setMajor(Major major) {
+    public void setMajor(EMajor major) {
         this.major = major;
     }
 
@@ -152,14 +174,6 @@ public class Student extends SingleIdEntity implements Serializable {
 
     public void setAquisition(EAquisition aquisition) {
         this.aquisition = aquisition;
-    }
-
-    public ERole geteRole() {
-        return eRole;
-    }
-
-    public void seteRole(ERole eRole) {
-        this.eRole = eRole;
     }
 
     public User getUser() {
