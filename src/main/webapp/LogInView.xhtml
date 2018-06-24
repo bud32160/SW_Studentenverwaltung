@@ -1,27 +1,32 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>S-Cone - Home</title>
+        <title>OTH - Login</title>
         <h:outputStylesheet library="css" name="logInStyle.css" />
         <h:outputScript library="js" name="logIn.js" />
     </h:head>
     <h:body>
-        
-        <h:form id="login-form" prependId="false">
-            <h:graphicImage id="logo-form" library="img" name="OthLogo.png" />
-            <br/>   
-            <h:outputLabel value="Username" for="username" />
-            <br/>
-            <h:inputText value="#{accountModel.username}" />
-            <br/>
-            <h:outputLabel value="Password" for="password" />
-            <br/>
-            <h:inputSecret value="#{accountModel.password}"/>
-            <br/>
-            <h:commandButton action="#{accountModel.logIn()}" value="Login" id="loginBtn"/>   
-        </h:form>
+        <ui:composition template="MainStructure.xhtml">
+            <ui:define name="content">
+                <h:form id="login-form" prependId="false">
+                    <p:panel header = "Log In" >
+                    <h:panelGrid columns="2" style="margin-bottom:30px"  cellpadding="2">
+                    <p:outputLabel value="Username" />
+                    <p:inputText id="username" value="#{accountModel.username}" required="true" requiredMessage="Username erforderlich" size="20" maxlength="60"  placeholder="Username"/>
+                    <p:outputLabel value="Password" />
+                    <p:password id="password" value="#{accountModel.password}" required="true" requiredMessage="Passwort erforderlich!" size="20" maxlength="20" placeholder="Passwort"/>
+                    <p:commandButton value="Anmelden" id="loginBtn" ajax="false" action="#{accountModel.logIn()}" />
+                    </h:panelGrid>
+                    </p:panel>
+                </h:form>
+                     <h:outputLabel for="error" value="Username oder Password nicht korrekt" rendered="#{personModel.loginfalse}" style=" color: red;" />
+            </ui:define>
+        </ui:composition>  
     </h:body>
 </html>
 

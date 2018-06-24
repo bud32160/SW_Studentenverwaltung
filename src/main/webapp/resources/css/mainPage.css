@@ -11,59 +11,36 @@ body{
     top: 5%;
 }
 
-#signed-in-text{
-    margin-left: 5px;
-    top: 95%;
+#top-bar{
+    width: 100%;
+    border-radius: 5px;
 }
 
-#split-bar{
+#bottom-bar{
     width: 100%;
-    height: 20px;
-    background-image: url('img/splitBar.png');
+    border-radius: 5px;
 }
 
 #side-menue{
     background-image: url('img/sideColumn.png');
-}
-
-#main-content{
-    margin-left: 30px;
-    margin-top: 30px;
-    width: 90%;
-    height: 90%;
-    background-color: black;
-}
-
-.top-menue{
-    width: 100%;
-    height: 150px;
-    background-image: url('img/headColumn.png');
-}
-
-.split-bar{
-    width: 100%;
-    height: 20px;
-    background-image: url('img/splitBar.png');
-}
-
-.main-container{
-    width: 100%;
-    height: 600px;
-    background-color: yellow;
-}
-
-.side-menue{
     width: 200px;
     float: left;
 }
 
-.main-content{
+#content-container{
     width: 1000px;
     height: 100%;
     float: left;
     background-color: red;
 }
-.submenu-end{
+
+#left {
+    float: left;
+    padding: 5px;
+    width: 100px;
+}
+
+#submenu-end{
     width: 100%;
     height: 60px;
     background-image: url('img/headColumn2.png');

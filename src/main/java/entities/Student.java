@@ -10,13 +10,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.MapsId;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,14 +24,17 @@ import util.SingleIdEntity;
 @Entity
 @Table(name="STUDENT_TABLE")
 @NamedQueries({
+@NamedQuery(name = "Student.getAllStudents", query = "SELECT s FROM Student AS s"),
 @NamedQuery(name = "Student.getStudentByMatrikelnumber", query = "SELECT s FROM Student AS s WHERE s.matrikelNumber = :matrikelNumber" ),
 @NamedQuery(name = "Student.getStudentByMailAddress", query = "SELECT s FROM Student AS s WHERE s.mailAddress = :mailAddress" ),
 })
 public class Student extends SingleIdEntity implements Serializable {
     
-    @Id
     @Column(name="Student_MailAddress")
     private String mailAddress;
+    
+    @Column(name="User_Id")
+    private Long userId;
     
     @Column(name="MatrikelNumber")
     private String matrikelNumber;
@@ -58,18 +58,16 @@ public class Student extends SingleIdEntity implements Serializable {
     @Column(name="Aquisition")
     private EAquisition aquisition;
     
-    @MapsId
-    @OneToOne(mappedBy="student")
-    @JoinColumn(name="Student_MailAddress")
-    private User user;
+    @Column(name="Confirmation_Payed")
+    private boolean confirmationPayed;
     
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Courses")
+    @ManyToMany
+    @JoinColumn(name="Courses")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Course> courseList;
     
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Exams")
+    @ManyToMany
+    @JoinColumn(name="Exams")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Exam> examList;
 
@@ -85,7 +83,7 @@ public class Student extends SingleIdEntity implements Serializable {
         this.aquisition = aquisition;
     }
 
-    public Student(String matrikelNumber, String firstName, String lastName, Address address, Date birthday, EMajor major, EAquisition aquisition, User user) {
+    public Student(Long userId, String matrikelNumber, String firstName, String lastName, Address address, Date birthday, EMajor major, EAquisition aquisition) {
         this.matrikelNumber = matrikelNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -93,7 +91,7 @@ public class Student extends SingleIdEntity implements Serializable {
         this.birthday = birthday;
         this.major = major;
         this.aquisition = aquisition;
-        this.user = user;
+        this.userId = userId;
     }
 
     public void addCourse(Course course){
@@ -111,6 +109,15 @@ public class Student extends SingleIdEntity implements Serializable {
     }
     
     // Getter and setter
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+    
+    
     public String getMailAddress() {
         return mailAddress;
     }
@@ -176,14 +183,6 @@ public class Student extends SingleIdEntity implements Serializable {
         this.aquisition = aquisition;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public List<Course> getCourseList() {
         return courseList;
     }
@@ -200,4 +199,11 @@ public class Student extends SingleIdEntity implements Serializable {
         this.examList = examList;
     }
 
+    public boolean isConfirmationPayed() {
+        return confirmationPayed;
+    }
+
+    public void setConfirmationPayed(boolean confirmationPayed) {
+        this.confirmationPayed = confirmationPayed;
+    }
 }

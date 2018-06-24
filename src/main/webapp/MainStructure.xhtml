@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="mainPage.css" />
+        <h:outputScript library="js" name="menueController.js" />
+        <title>OTH Verwaltung</title>
+
+    </h:head>
+    
+    <h:body>
+        
+        <div id="top">
+            <h:graphicImage id="logo" library="img" name="OthLogo.png" />
+            <h:graphicImage id="top-bar" library="img" name="splitBar.png" />
+            <ui:insert name="top">
+                <h:form rendered="#{accountModel.logInStatus}"> 
+                    <p:menubar>
+                        <f:facet name="options">
+                            <p:commandButton value="Meine Daten" ajax="false" action="StudentOverview"/>
+                            <p:commandButton value="Kurse" ajax="false" action="CourseOverview"/>
+                            <p:commandButton value="Prüfungen" ajax="false" action="ExamOverview"/>
+                            <p:commandButton value="Rückmeldung" ajax="false" action="ConfirmationView"/>
+                            <p:commandButton value="Ausloggen" ajax="false" action="#{accountModel.logOut()}"/>
+                        </f:facet>
+                    </p:menubar>
+                </h:form>
+                <h:form rendered="#{!accountModel.logInStatus}">   
+                    <p:menubar>
+                        <f:facet name="options">
+                            <p:commandButton value="Einloggen" ajax="false" action="/LogInView.xhtml"/>
+                            <p:commandButton value="Registrieren" ajax="false" action="/RegistrationView.xhtml" />
+                        </f:facet>
+                    </p:menubar>
+                </h:form>  
+            </ui:insert>
+        </div>
+
+        <div id="content" class="content-container">
+            <ui:insert name="content">MainContent</ui:insert>
+        </div>
+
+        
+        <div id="bottom" class="submenu-end">
+            <h:graphicImage id="bottom-bar" library="img" name="splitBar.png" />
+            <ui:insert name="bottom">
+                <dir>
+                    <br/>
+                    <i class="watermark shadow">OTH Regensburg</i>&nbsp;
+                    <br/>
+                    <i class="watermark-small shadow">David Burger</i>&nbsp; 
+                </dir>
+            </ui:insert>
+        </div>
+        
+    </h:body>
+    
+</html>

@@ -8,23 +8,23 @@ public enum EMajor {
     
     @Override
     public String toString(){
-        String literal = null;
+        String result = "";
         
         switch(this){
             case IN :
-                literal = "Informatik";
+                result = "Informatik";
                 break;
             case IT :
-                literal = "Technische Informatik";
+                result = "Technische Informatik";
                 break;
             case IW :
-                literal = "Wirtschaftsinformatik";
+                result = "Wirtschaftsinformatik";
                 break;
             case IM :
-                literal = "Medizininformatik";
+                result = "Medizininformatik";
                 break;
         }
         
-        return literal;
+        return result;
     }
 }

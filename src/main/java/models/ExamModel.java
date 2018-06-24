@@ -1,19 +1,25 @@
 package models;
 
 import entities.Exam;
+import entities.Student;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import services.AdministrationService;
+import services.ExamService;
+import services.StudentService;
 
 @Named
 @SessionScoped
 public class ExamModel implements Serializable {
     
     @Inject
-    private AdministrationService administrationService;
+    private ExamService examService;
+    
+    @Inject
+    private StudentService studentService;
     
     private Long examID;
     private Long courseId;
@@ -21,19 +27,12 @@ public class ExamModel implements Serializable {
     private Date date;
     private String instructor;
     private Long roomId;
-    // private List<String> participants;
+    private List<Student> participants;
     private int capacity;
     
-    public void createExam(){
-        administrationService.createExam(new Exam(this.examID, this.courseId, this.time, this.date, this.instructor, this.roomId, this.capacity));
-    }
-
-    public AdministrationService getAdministrationService() {
-        return administrationService;
-    }
-
-    public void setAdministrationService(AdministrationService administrationService) {
-        this.administrationService = administrationService;
+    public void createExam(Exam exam){
+        
+        examService.createExam(exam);
     }
 
     public Long getExamID() {
@@ -90,6 +89,14 @@ public class ExamModel implements Serializable {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public List<Student> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Student> participants) {
+        this.participants = participants;
     }
 
 }

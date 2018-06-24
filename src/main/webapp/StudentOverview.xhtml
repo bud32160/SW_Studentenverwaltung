@@ -1,58 +1,63 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     
     <h:head>
         <h:outputStylesheet library="css" name="mainPage.css" />
+        <h:outputScript library="js" name="menueController.js" />
         
         <title>S-Cone - Verwaltung</title>
     </h:head>
     
-    <div class="top-menue">
-         <h:form id="top-menue" prependId="false">
-            <h:graphicImage id="logo" library="img" name="OthLogo.png" />
-            <br/>
-            <h:outputLabel id="signed-in-text" value="Sie sind angemeldet als: " for="username" />
-            <h:outputLabel value="#{accountModel.getUsername()}" />
-        </h:form> 
-    </div>
-    
-    <div class="split-bar" />
-    
-    <div class="main-container">
-         <div class="side-menue">
-            <h:form id="side-menue" prependId="false">
-                <p:menubar>
-                    <p:submenu label="Kursübersicht">
-                        <p:menuitem value="Übersicht" />
-                        <p:menuitem value="Angemeldete Kurse" />
-                        <p:menuitem value="Angebot" />
-                    </p:submenu>
-                    <p:submenu label="Prüfungsverwaltung">
-                        <p:menuitem value="Übersicht" />
-                        <p:menuitem value="Angemeldete Prüfungen" />
-                        <p:menuitem value="Anmeldung" />
-                    </p:submenu>
-                    <p:submenu label="Literaturverwaltung">
-                        <p:menuitem value="Übersicht" />
-                        <p:menuitem value="Historie" />
-                    </p:submenu>
-                </p:menubar>
-            </h:form>
-        </div>
-    
-        <div class="main-content">
-            <h:form id="main-content" prependId="false">
-                <p>hallo</p>
-            </h:form>
-        </div>
-    </div>
+    <body>
+        <ui:composition template="MainStructure.xhtml">
+            <ui:define name="content">
+            <h:form>
+           <p:panel header="Meine Daten">
+            <h:panelGrid columns="2" style="margin-bottom:30px"  cellpadding="3 ">
+             
+	    <p:outputLabel for="firstname" value="Vorname: " />
+            <p:outputLabel  id = "firstname" value="#{accountModel.currentStudent.firstName}" />
+           
+            
+            <p:outputLabel for="lastname" value="Nachname: " />
+            <p:outputLabel  id = "lastname" value="#{accountModel.currentStudent.lastName}" />
+            
+           
+            <p:outputLabel for="birthday" value="Geburtstag:" />
+            <p:outputLabel id ="birthday" value="#{accountModel.currentStudent.birthday}" />
+           
+            <p:outputLabel  value="Studiengang: " />
+            <p:outputLabel id ="major" value="#{accountModel.currentStudent.major.toString()}" />
+            
+            <p:outputLabel  value="Abschluss: " />
+            <p:outputLabel id ="aquisition" value="#{accountModel.currentStudent.aquisition.toString()}" />
+            
+            <p:outputLabel for="street" value="Straße:"/>
+            <p:outputLabel id ="street" value="#{accountModel.currentStudent.address.street}" />
+            
+            <p:outputLabel for="houseNumber" value="Hausnummer:"/>
+            <p:outputLabel id ="houseNumber" value="#{accountModel.currentStudent.address.houseNumber}" />
 
-    <div class="split-bar" />
-    
-    <div class="submenu-end" />
+            <p:outputLabel for="zip" value="Postleitzahl:"/>
+            <p:outputLabel id ="zip" value="#{accountModel.currentStudent.address.zipCode}" />
+
+            <p:outputLabel for="city" value="Stadt: " />
+            <p:outputLabel id ="city" value="#{accountModel.currentStudent.address.city}" />
+
+            <p:outputLabel for="country" value="Land: " />
+            <p:outputLabel id ="country" value="#{accountModel.currentStudent.address.country}" />
+            
+            </h:panelGrid>
+               <p:commandButton value="Daten ändern" ajax="false" action="AddressView" />
+           </p:panel>    
+        </h:form>
+        </ui:define>
+        </ui:composition>
+    </body>
 </html>
 

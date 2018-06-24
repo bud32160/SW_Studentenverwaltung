@@ -9,31 +9,32 @@ public enum EDay {
     FR,
     SA;
     
-    public String getAsString(){
-        String day = null;
+    @Override
+    public String toString(){
+        String result = "";
         
         switch(this){
             case MO :
-                day = "Montag";
+                result = "Montag";
                 break;
             case TU :
-                day = "Dienstag";
+                result = "Dienstag";
                 break;
             case WED :
-                day = "Mittwoch";
+                result = "Mittwoch";
                 break;
             case TH :
-                day = "Donnerstag";
+                result = "Donnerstag";
                 break;
             case FR :
-                day = "Freitag";
+                result = "Freitag";
                 break;
             case SA :
-                day = "Samstag";
+                result = "Samstag";
                 break;
         }
         
-        return day;
+        return result;
     }
    
 }

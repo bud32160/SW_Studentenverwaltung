@@ -1,24 +1,23 @@
 package enumerations;
 
-public enum EAquisition {
+public enum ERole {
     
-    BACHELOR,
-    MASTER;
+    STUDENT,
+    PROFESSOR;
     
     @Override
     public String toString(){
         String result = "";
         
         switch(this){
-            case BACHELOR :
-                result = "Bachelor";
+            case STUDENT :
+                result = "Student";
                 break;
-            case MASTER :
-                result = "Master";
+            case PROFESSOR :
+                result = "Professor";
                 break;
         }
         
         return result;
     }
-    
 }

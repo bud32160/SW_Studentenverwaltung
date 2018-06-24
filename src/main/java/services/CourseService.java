@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import javax.jws.WebMethod;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -36,9 +35,8 @@ public class CourseService {
     public Course createCourse(Course course){
         Course c = course;
         
-        em.getTransaction().begin();
         em.persist(c);
-        em.getTransaction().commit();
+        em.flush();
             
         return course;
     }
@@ -47,9 +45,8 @@ public class CourseService {
     public boolean deleteCourse(Course course){
         Course c = em.find(Course.class, course.getId());
         
-        em.getTransaction().begin();
         em.remove(c);
-        em.getTransaction().commit();
+        em.flush();
         
         return true;
     }
@@ -76,9 +73,8 @@ public class CourseService {
             return false;
         } 
         else{
-            em.getTransaction().begin();
             c.addParticipant(student);
-            em.getTransaction().commit();
+            em.flush();
             
             return true;
         }
@@ -93,9 +89,8 @@ public class CourseService {
             return false;
         }
         
-        em.getTransaction().begin();
         em.remove(c);
-        em.getTransaction().commit();
+        em.flush();
             
         return true;     
     }
@@ -108,7 +103,7 @@ public class CourseService {
      */
     public List<ETime> getFreeTimeSlots(Room room, EDay day){
         List<ETime> timeList = new ArrayList<>(Arrays.asList(ETime.values()));
-        String selectCommand = "SELECT c FROM COURSE AS c WHERE roomId = " + Integer.toString(room.getId()) + " AND EDay = " + day;
+        String selectCommand = "SELECT c FROM COURSE AS c WHERE roomId = " + Long.toString(room.getId()) + " AND EDay = " + day;
         TypedQuery<Course> query = em.createQuery(selectCommand, Course.class);
         List<Course> courseList;
         

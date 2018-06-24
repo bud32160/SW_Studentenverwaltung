@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <h:outputStylesheet library="css" name="logInStyle.css" />
+        <h:outputScript library="js" name="logIn.js" />
+        <title>OTHBurger - Registrierung</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="MainStructure.xhtml">
+            <ui:define name="content">
+            <h:form>
+           <p:panel header="Registrierung">
+            <h:panelGrid columns="2" style="margin-bottom:30px"  cellpadding="3 ">
+             
+	    <p:outputLabel for="firstname" value="Vorname: " />
+            <p:inputText  id = "firstname" value="#{studentModel.firstName}" required="true"  />
+           
+            
+            <p:outputLabel for="lastname" value="Nachname: " />
+            <p:inputText  id = "lastname" value="#{studentModel.lastName}" required="true"  />
+            
+           
+            <p:outputLabel for="birthday" value="Geburtstag:" />
+            <p:calendar id="birthday" value="#{studentModel.birthday}" locale="de" navigator="true" pattern="dd.MM.yyyy"
+                               yearRange="c-100:c+0"          validatorMessage="Birthday required" label="Birthday" required="true" >
+            <f:convertDateTime pattern="dd.MM.yyyy" />
+            </p:calendar>
+           
+            <p:outputLabel  value="Studiengang: " />
+            <p:selectOneMenu id="Major" value="#{studentModel.major}" label="Major" required="true" style="width:120px">
+                <f:selectItem itemLabel="#{studentModel.getMajorString(0)}" itemValue="#{studentModel.returnMajor(0)}" />
+                <f:selectItem itemLabel="#{studentModel.getMajorString(1)}" itemValue="#{studentModel.returnMajor(1)}" />
+                <f:selectItem itemLabel="#{studentModel.getMajorString(2)}" itemValue="#{studentModel.returnMajor(2)}" />
+                <f:selectItem itemLabel="#{studentModel.getMajorString(3)}" itemValue="#{studentModel.returnMajor(3)}" />
+             </p:selectOneMenu>
+            
+            <p:outputLabel  value="Abschluss: " />
+            <p:selectOneMenu id="Aquisition" value="#{studentModel.aquisition}" label="Aquisition" required="true" style="width:120px">
+                <f:selectItem itemLabel="#{studentModel.getAquisitionString(0)}" itemValue="#{studentModel.returnAquisition(0)}" />
+                <f:selectItem itemLabel="#{studentModel.getAquisitionString(1)}" itemValue="#{studentModel.returnAquisition(1)}" />
+             </p:selectOneMenu>
+            
+            <p:outputLabel for="street" value="Straße:"/>
+            <p:inputText  id = "street" value="#{studentModel.street}"  required="true"/>
+            
+            <p:outputLabel for="houseNumber" value="Hausnumer:"/>
+            <p:inputText  id = "houseNumber" value="#{studentModel.houseNumber}" required="true" />
+
+            <p:outputLabel for="zip" value="Postleitzahl:"/>
+            <p:inputText  id = "zip" value="#{studentModel.zipCode}" required="true" />
+
+            <p:outputLabel for="city" value="Stadt: "/>
+            <p:inputText  id = "city" value="#{studentModel.city}" required="true"  />
+
+            <p:outputLabel for="country" value="Land:  "/>
+            <p:inputText  id = "country" value="#{studentModel.country}"  required="true" />
+                        
+
+            <p:outputLabel for="password" value="Gewünschtes User-Passwort: "/>
+            <p:password id ="password"  value="#{studentModel.password}" required="true" />
+
+            </h:panelGrid>
+               <p:commandButton value="Registrieren" ajax="false" action="#{studentModel.createStudent()}" />
+           </p:panel>    
+        </h:form>
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

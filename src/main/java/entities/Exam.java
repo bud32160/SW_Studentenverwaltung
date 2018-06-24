@@ -5,22 +5,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import util.SingleIdEntity;
 
 @Entity
+@Table(name="EXAM_TABLE")
 @NamedQuery(name="Exam.getAllExams", query="SELECT e FROM Exam AS e")
 public class Exam extends SingleIdEntity implements Serializable {
 
-    @Column(name="CourseId")
-    private int courseId;
+    @Column(name="Course_Id")
+    private Long courseId;
     
     @Column(name="Time")
     private String time;
@@ -31,12 +36,15 @@ public class Exam extends SingleIdEntity implements Serializable {
     @Column(name="Instructor")
     private String instructor;
     
-    @Column(name="RoomId")
-    private Long roomId;
+    @ManyToOne
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinColumn(name = "Room")
+    private Room room;
     
-    @Column(name="Participants")
-    @ManyToMany(mappedBy="examList")
-    List<Student> participants;
+    @ManyToMany
+    @JoinColumn(name = "Students")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Student> participants;
     
     @Column(name="Capacity")
     private int capacity;
@@ -44,12 +52,12 @@ public class Exam extends SingleIdEntity implements Serializable {
     public Exam() {
     }
 
-    public Exam(int courseId, String time, Date date, String instructor, Long roomId, int capacity) {
+    public Exam(Long courseId, String time, Date date, String instructor, Room room, int capacity) {
         this.courseId = courseId;
         this.time = time;
         this.date = date;
         this.instructor = instructor;
-        this.roomId = roomId;
+        this.room = room;
         this.capacity = capacity;
     }
     
@@ -61,11 +69,11 @@ public class Exam extends SingleIdEntity implements Serializable {
     }
     
     // Getter and setter
-    public int getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(int courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 
@@ -93,12 +101,12 @@ public class Exam extends SingleIdEntity implements Serializable {
         this.instructor = instructor;
     }
 
-    public Long getRoomId() {
-        return roomId;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomId(Long roomId) {
-        this.roomId = roomId;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public int getCapacity() {
@@ -117,5 +125,4 @@ public class Exam extends SingleIdEntity implements Serializable {
     public void setKandidaten(List<Student> participants) {
         this.participants = participants;
     }
-  
 }

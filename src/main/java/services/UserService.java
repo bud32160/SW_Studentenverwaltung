@@ -2,13 +2,13 @@ package services;
 
 import entities.Student;
 import entities.User;
+import enumerations.ERole;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
@@ -39,8 +39,9 @@ public class UserService implements Serializable {
      * @return
      */
    public User createUserByStudent(Student student, String userPassword){
-
+        ERole role = ERole.STUDENT;
         User user = new User();
+        user.setId();
         
         // Create cryptic password
         String salt = this.createRandomString(32);
@@ -49,19 +50,18 @@ public class UserService implements Serializable {
         user.setSalt(salt);
         
         user.setMailAddress(student.getMailAddress());
-        user.setUsername(createUserName(student));
-        user.setStudent(student);
+        user.setUsername(createUserNameStudent(student));
+        user.setRoleId(student.getId());
+        user.setRole(role);
+        
+        em.persist(user);
+        em.flush();
         
         return user;
    }
-    
-    /**
-     * Find a user by mailAddress
-     * @param user
-     * @return
-     */
+   
     public User findUserByMailAddress(User user){
-        User u = em.find(User.class, user.getMailAddress());
+        User u = em.find(User.class, user.getId());
         if(u == null){
             logger.log(Level.INFO, "User does not exist");
             return null;
@@ -76,7 +76,7 @@ public class UserService implements Serializable {
      * @return
      */
     public User findUserByStudent(Student student){
-        User u = em.find(User.class, student.getMailAddress());
+        User u = em.find(User.class, student.getUserId());
         if(u == null){
             logger.log(Level.INFO, "User does not exist");
             return null;
@@ -98,7 +98,7 @@ public class UserService implements Serializable {
      * @param student
      * @return
      */
-    private String createUserName(Student student) {
+    private String createUserNameStudent(Student student) {
         char[] firstName = student.getFirstName().toCharArray();
         char[] lastName = student.getLastName().toCharArray();
         
@@ -111,12 +111,7 @@ public class UserService implements Serializable {
         String s1 = new String(userName);
         String result = s1.toLowerCase();
         
-        // Concatenate with random number (between 30000 and 40000)
-        Random random = new Random();
-        int value = 30000 + random.nextInt(1000);
-        String s2 = Integer.toString(value);
-        
-        return (result + s2);
+        return (result + student.getMatrikelNumber());
     }
     
     /**

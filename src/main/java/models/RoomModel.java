@@ -6,14 +6,14 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import services.AdministrationService;
+import services.RoomService;
 
 @Named
 @SessionScoped
 public class RoomModel implements Serializable {
     
     @Inject
-    private AdministrationService administrationService;
+    private RoomService roomService;
     
     private Long ID;
     private ERoomDescriptor descriptor;
@@ -24,15 +24,7 @@ public class RoomModel implements Serializable {
         
         //TODO : Create enum ERoomDescriptor
         
-        administrationService.createRoom(new Room(this.descriptor, this.number, this.capacity));
-    }
-
-    public AdministrationService getAdministrationService() {
-        return administrationService;
-    }
-
-    public void setAdministrationService(AdministrationService administrationService) {
-        this.administrationService = administrationService;
+        roomService.createRoom(new Room(this.descriptor, this.number, this.capacity));
     }
 
     public Long getID() {

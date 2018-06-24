@@ -1,14 +1,11 @@
 package entities;
 
+import enumerations.ERole;
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 import util.SingleIdEntity;
@@ -19,11 +16,13 @@ import util.SingleIdEntity;
 @NamedQuery(name = "User.getUserByMailAddress", query = "SELECT u FROM User AS u WHERE u.mailAddress = :mailAddress" ),
 @NamedQuery(name = "User.getUserByUsername", query = "SELECT u FROM User AS u WHERE u.username = :username" )
 })
-public class User implements Serializable {
+public class User extends SingleIdEntity implements Serializable {
     
-    @Id
     @Column(name="User_MailAddress")
     private String mailAddress;
+    
+    @Column(name="Role_Id")
+    private Long roleId;
     
     @Column(name="Username")
     private String username;
@@ -35,22 +34,38 @@ public class User implements Serializable {
     @Column(name="salt")
     private String salt;
     
-    @OneToOne(cascade = {CascadeType.ALL})
-    @PrimaryKeyJoinColumn
-    private Student student;
+    @Column(name="Role_Model")
+    private ERole roleModel;
 
     public User() {
     }
 
-    public User(String username, String password, String salt, String mailAddress, Student student) {
+    public User(Long roleId, String username, String password, String salt, String mailAddress) {
+        this.roleId = roleId;
         this.username = username;
         this.password = password;
         this.salt = salt;
         this.mailAddress = mailAddress;
-        this.student = student;
     }
     
     // Getter and setter
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+    public ERole getRoleModel() {
+        return roleModel;
+    }
+
+    public void setRole(ERole roleModel) {
+        this.roleModel = roleModel;
+    }
+    
+    
     public String getUsername() {
         return username;
     }
@@ -83,12 +98,4 @@ public class User implements Serializable {
         this.mailAddress = mailAddress;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-   
 }
