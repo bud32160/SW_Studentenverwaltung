@@ -45,4 +45,10 @@ public class RoomService {
         
         return true;
     }
+    
+    public Room findRoomById(Long id){
+        Room r = em.find(Room.class, id);
+        
+        return r;
+    }
 }

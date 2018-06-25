@@ -1,6 +1,8 @@
 package models;
 
+import converter.StudentConverter;
 import entities.Course;
+import entities.Exam;
 import entities.Room;
 import entities.Student;
 import enumerations.EDay;
@@ -14,6 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import services.CourseService;
+import services.RoomService;
 import services.StudentService;
 
 @Named
@@ -24,9 +27,10 @@ public class CourseModel implements Serializable {
     private CourseService courseService;
     
     @Inject
-    private StudentService studentService;
+    private RoomService roomService;
     
-    private final FacesContext context = FacesContext.getCurrentInstance();
+    @Inject
+    private StudentService studentService;
     
     private Long courseID;
     private String description;
@@ -40,6 +44,9 @@ public class CourseModel implements Serializable {
     
     private Course currentCourse;
     private Student currentStudent;
+    private Student participant;
+    
+
     
     public void createCourse(Room room){
         this.participants = new ArrayList();
@@ -49,6 +56,7 @@ public class CourseModel implements Serializable {
     }
     
     public List<ETime> displayAvailableTimes(Room room, EDay day){
+        FacesContext context = FacesContext.getCurrentInstance();
         List<ETime> list = courseService.getFreeTimeSlots(room, day);
         if(list == null){
             context.addMessage(null, new FacesMessage("Kursraum ausgebucht!"));
@@ -59,32 +67,64 @@ public class CourseModel implements Serializable {
     }
     
     public List<Course> getAllCourse(){    
+        FacesContext context = FacesContext.getCurrentInstance();
         List<Course> list = courseService.getAllCourse();
         if(list == null){
             context.addMessage(null, new FacesMessage("Kein Kurs vorhanden!"));
-            return null;
+            list = new ArrayList();
+            return list;
         } else {
             return list;
         }
     }
     
-    public void signInCourseStudent(){        
+    public List<Course> getCurrentCourseList(Student student){
+        Student s = studentService.getStudentByMailAddress(student.getMailAddress());
+        List<Course> courseList = new ArrayList();
+        
+        if(s == null){
+            return courseList;
+        }
+        else{
+            courseList = s.getCourseList();
+            
+            return courseList;
+        }
+    }
+    
+    public String signInCourseStudent(Student student, Course course){   
+        this.currentStudent = student;
+        this.currentCourse = course;
+        
+        FacesContext context = FacesContext.getCurrentInstance();
         boolean signedIn = courseService.signInCourse(this.currentStudent, this.currentCourse);
         
         if(!signedIn){
             context.addMessage(null, new FacesMessage("Maximale Anzahl an Kursteilnehmern bereits erreicht!"));
+            
+            return "CourseOverview";
         } else {
             context.addMessage(null, new FacesMessage("Einschreibung erfolgreich!"));
+            
+            return "StudentCourseView";
         }
     }
     
-    public void signOutCourseStudent(){        
-        boolean signedOut = courseService.signOutCourse(this.currentStudent, this.currentCourse);
+    public String signOutCourseStudent(Student student, Course course){
+        this.currentStudent = student;
+        this.currentCourse = course;
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        boolean signedOut = courseService.signOutCourse(this.currentStudent, course);
         
         if(!signedOut){
             context.addMessage(null, new FacesMessage("Ausschreibung nicht möglich!"));
+            
+            return "StudentCourseView";
         } else {
             context.addMessage(null, new FacesMessage("Ausschreibung erfolgreich!"));
+            
+            return "StudentCourseView";
         }
     }
 
@@ -174,6 +214,38 @@ public class CourseModel implements Serializable {
 
     public void setParticipants(List<Student> participants) {
         this.participants = participants;
+    }
+
+    public RoomService getRoomService() {
+        return roomService;
+    }
+
+    public void setRoomService(RoomService roomService) {
+        this.roomService = roomService;
+    }
+
+    public StudentService getStudentService() {
+        return studentService;
+    }
+
+    public void setStudentService(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    public Student getCurrentStudent() {
+        return currentStudent;
+    }
+
+    public void setCurrentStudent(Student currentStudent) {
+        this.currentStudent = currentStudent;
+    }
+
+    public Student getParticipant() {
+        return participant;
+    }
+
+    public void setParticipant(Student participant) {
+        this.participant = participant;
     }
 
 }

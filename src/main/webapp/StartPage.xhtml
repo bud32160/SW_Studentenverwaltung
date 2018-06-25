@@ -6,10 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet library="css" name="mainPage.css" />
-        <h:outputScript library="js" name="menueController.js" />
-        <title>OTH Regensburg</title>
+        <title>Facelet Title</title>
     </h:head>
     <h:body>
         <ui:composition template="MainStructure.xhtml">
@@ -17,12 +14,10 @@
                 <h:form id="welcome-form" prependId="false">
                     <p:panel header="Willkommen">
                         <h:panelGrid columns="2" style="margin-bottom:30px"  cellpadding="3 ">
-                        <h:outputLabel value="Herzlich Willkommen. Sie sind eingeloggt als: " />
-                        <h:outputLabel value="#{accountModel.currentUser.username}" />
-                        </h:panelGrid>
-                        <h:graphicImage id="graphic" library="img" name="OthMensa.jpg" />
-                        
-                    </p:panel>  
+                        <h:outputLabel value="Herzlich Willkommen bei der OTH Regensburg" />
+                    </h:panelGrid>
+                    <h:graphicImage id="graphic" library="img" name="OthMensa.jpg" />
+                    </p:panel>
                 </h:form>
             </ui:define>
         </ui:composition>

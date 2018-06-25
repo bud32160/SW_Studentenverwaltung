@@ -3,6 +3,7 @@ package services;
 import entities.Address;
 import entities.Student;
 import entities.User;
+import java.util.List;
 import java.util.Random;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -70,6 +71,14 @@ public class StudentService {
     
     @WebMethod(exclude=true)
     @Transactional
+    public List<Student> getAllStudents(){
+        TypedQuery<Student> query = em.createNamedQuery("Student.getAllStudents", Student.class);
+        
+        return query.getResultList();
+    }
+    
+    @WebMethod(exclude=true)
+    @Transactional
     public Transaction payConfirmation(String mailFrom, Student student){
 
         try { // Call Web Service Operation
@@ -85,13 +94,16 @@ public class StudentService {
             String description = "Rückmeldung Student: " + student.getFirstName() + " " + student.getLastName();
             
             
+            
             othr.sw.payfast.service.Transaction arg0 = new othr.sw.payfast.service.Transaction();
+            arg0.setAmount(amount);
+            arg0.setDescription(description);
+            arg0.setFrom(accountFrom);
+            arg0.setTo(accountTo);
             // TODO process result here
             othr.sw.payfast.service.Transaction result = port.createTransaction(arg0);
             
-            Transaction transaction = new Transaction();
-            
-            return transaction;
+            return result;
             
         } catch (Exception ex) {
             // TODO handle custom exceptions here
@@ -119,10 +131,25 @@ public class StudentService {
     }
     
     public Student getStudentByUser(User user){
-        TypedQuery<Student> query = em.createNamedQuery("Student.getStudentByMailAddress", Student.class);
-        query.setParameter("mailAddress", user.getMailAddress());
         
         try{
+            TypedQuery<Student> query = em.createNamedQuery("Student.getStudentByMailAddress", Student.class);
+            query.setParameter("mailAddress", user.getMailAddress());
+        
+            return query.getSingleResult();
+        } catch(NoResultException e){
+            return null;
+        }        
+    }
+    
+    @WebMethod(exclude=true)
+    @Transactional
+    public Student getStudentByMailAddress(String mailAddress){
+        
+        try{
+            TypedQuery<Student> query = em.createNamedQuery("Student.getStudentByMailAddress", Student.class);
+            query.setParameter("mailAddress", mailAddress);
+            
             return query.getSingleResult();
         } catch(NoResultException e){
             return null;

@@ -33,66 +33,122 @@ public class CourseService {
     
     @Transactional
     public Course createCourse(Course course){
-        Course c = course;
         
-        em.persist(c);
-        em.flush();
+        try{
+            Course c = course;
+        
+            em.persist(c);
+            em.flush();
             
         return course;
+        } catch(Exception ex){
+            return null;
+        }
+
+    }
+    
+    public Course getCourseByDescription(String description){
+        
+        try{
+            TypedQuery<Course> query = em.createNamedQuery("Course.getCourseByDescription", Course.class);
+            query.setParameter("descrition", description);
+            
+            Course c = query.getSingleResult();
+        
+            return c;
+        } catch(Exception ex){
+            
+            return null;
+        }    
     }
     
     @Transactional
     public boolean deleteCourse(Course course){
-        Course c = em.find(Course.class, course.getId());
         
-        em.remove(c);
-        em.flush();
+        try{
+            Course c = em.find(Course.class, course.getId());
         
-        return true;
+            em.remove(c);
+            em.flush();
+        
+            return true;
+        } catch(Exception e){
+            return false;
+        }
+        
     }
     
     @Transactional
     public Course updateCourse(Course course){
-        course = em.merge(course);
+        
+        try{
+            course = em.merge(course);
         em.flush();
 
         return course;
+        } catch(Exception ex){
+            return null;
+        }
     }
     
     @Transactional
     public boolean signInCourse(Student student, Course course){
         
-        Course c = em.find(Course.class, course.getId());
-        
-        if(c == null){
-            return false;
-        }
-        
-        // Check if capacity is already exhausted
-        if(c.getCapacity() <= 0){
-            return false;
-        } 
-        else{
-            c.addParticipant(student);
-            em.flush();
+        try{
+             Course c = em.find(Course.class, course.getId());
+             Student s = em.find(Student.class, student.getId());
+             
+             if(courseContainsStudent(s, c))
+                return false;
+             
+            // Check if capacity is already exhausted
+            if(c.getCapacity() <= 0){
+                return false;
+            } 
+            else{
+                s.getCourseList().add(c);
+                em.persist(s);
+                
+                c.setCapacity(c.getCapacity() - 1);
+                c.addParticipant(student);
+                em.merge(c);
+                em.flush();
             
             return true;
+            }
+        } catch(Exception e){
+            return false;
+        }  
+    }
+    
+    public boolean courseContainsStudent(Student student, Course course){
+        for(Student s : course.getParticipants()){
+            if(s.getId().toString().equals(student.getId().toString()))
+                return true;
         }
+        
+        return false;
     }
     
     @Transactional
     public boolean signOutCourse(Student student, Course course){
         
-        Course c = em.find(Course.class, course.getId());
-        
-        if(c == null){
+        try{            
+            Student s = em.find(Student.class, student.getId());
+            Course c = em.find(Course.class, course.getId());
+            
+            s.getCourseList().remove(c);
+            em.merge(s);
+            
+            c.getParticipants().remove(student);
+            c.setCapacity(c.getCapacity() + 1);
+            em.merge(c);
+            em.flush();
+            
+            return true;
+        } catch(Exception ex){
             return false;
         }
-        
-        em.remove(c);
-        em.flush();
-            
-        return true;     
     }
     
     /**
@@ -104,10 +160,10 @@ public class CourseService {
     public List<ETime> getFreeTimeSlots(Room room, EDay day){
         List<ETime> timeList = new ArrayList<>(Arrays.asList(ETime.values()));
         String selectCommand = "SELECT c FROM COURSE AS c WHERE roomId = " + Long.toString(room.getId()) + " AND EDay = " + day;
-        TypedQuery<Course> query = em.createQuery(selectCommand, Course.class);
         List<Course> courseList;
         
         try{
+            TypedQuery<Course> query = em.createQuery(selectCommand, Course.class);
             courseList = query.getResultList();
         } catch (NoResultException e){
             return timeList;

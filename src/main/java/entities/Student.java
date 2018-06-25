@@ -206,4 +206,11 @@ public class Student extends SingleIdEntity implements Serializable {
     public void setConfirmationPayed(boolean confirmationPayed) {
         this.confirmationPayed = confirmationPayed;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" + "mailAddress=" + mailAddress + ", matrikelNumber=" + matrikelNumber + ", firstName=" + firstName + ", lastName=" + lastName + '}';
+    }
+    
+    
 }

@@ -2,6 +2,7 @@
 
 package services;
 
+import entities.Course;
 import entities.Exam;
 import entities.Student;
 import java.util.List;
@@ -32,54 +33,110 @@ public class ExamService {
     
     @Transactional
     public Exam createExam(Exam exam){
-        Exam e = exam;
-        
-        em.getTransaction().begin();
-        em.persist(e);
-        em.getTransaction().commit();
+        try{
+            Exam e = exam;
+
+            em.persist(e);
+            em.flush();
             
-        return exam;
+            return exam;
+        } catch(Exception ex){
+            return null;
+        }
+        
+
     }
     
     @Transactional
     public boolean deleteExam(Exam exam){
-        Exam e = em.find(Exam.class, exam.getId());
         
-        em.getTransaction().begin();
-        em.remove(e);
-        em.getTransaction().commit();
+        try{
+            Exam e = em.find(Exam.class, exam.getId());
         
-        return true;
+            em.remove(e);
+            em.flush();
+        
+            return true;
+        } catch(Exception e){
+            return false;
+        }
+
     }
 
     @Transactional
-    public void signInExam(Student student, Exam exam){
-        FacesContext context = FacesContext.getCurrentInstance();
-        Exam e = em.find(Exam.class, exam.getId());
-        
-        // Check if capacity is already exhausted
-        if(e.getCapacity() <= 0){
-            context.addMessage(null, new FacesMessage("Die maximale Anzahl an Prüfungsteilnehmern ist bereits belegt!"));
-        }
-        else{
-            em.getTransaction().begin();
-            e.addParticipant(student);
-            em.getTransaction().commit();
+    public boolean signInExam(Student student, Exam exam){
+
+        try{
+            Exam e = em.find(Exam.class, exam.getId());
+            Student s = em.find(Student.class, student.getId());
             
-            context.addMessage(null, new FacesMessage("Erfolgreich für die Prüfung angemeldet!"));
+            if(examContainsStudent(s, e))
+                return false;
+            
+            // Check if capacity is already exhausted
+            if(e.getCapacity() <= 0){
+            
+                return false;
+            }
+            else{
+                s.getExamList().add(e);
+                em.merge(s);
+                
+                e.setCapacity(e.getCapacity() - 1);
+                e.addParticipant(student);
+                em.merge(e);
+                em.flush();
+            
+                return true;
+            }
+        } catch(Exception ex){
+            return false;
+        }   
+    }
+    
+    public boolean examContainsStudent(Student student, Exam exam){
+        for(Student s : exam.getParticipants()){
+            if(s.getId().toString().equals(student.getId().toString()))
+                return true;
         }
+        
+        return false;
     }
     
     @Transactional
-    public void signOutExam(Student student, Exam exam){
-        FacesContext context = FacesContext.getCurrentInstance();
-        Exam e = em.find(Exam.class, exam.getId());
+    public boolean signOutExam(Student student, Exam exam){
+      
+        try{
+            Student s = em.find(Student.class, student.getId());
+            Exam e = em.find(Exam.class, exam.getId());
+            
+            s.getExamList().remove(e);
+            em.merge(s);
+            
+            e.getParticipants().remove(student);
+            e.setCapacity(e.getCapacity() + 1);
+            em.merge(e);
+            em.flush();
+            
+            return true;
+        } catch(Exception ex){
+            return false;
+        }
+    }
+    
+        public Exam getExamByDescription(String description){
         
-        em.getTransaction().begin();
-        e.getParticipants().remove(student);
-        em.getTransaction().commit();
+        try{
+            TypedQuery<Exam> query = em.createNamedQuery("Exam.getExameByDescription", Exam.class);
+            query.setParameter("description", description);
+            
+            Exam e = query.getSingleResult();
         
-        context.addMessage(null, new FacesMessage("Erfolgreich aus der Prüfung abgemeldet!"));
+            return e;
+        } catch(Exception ex){
+            
+            return null;
+        }    
     }
      
 }

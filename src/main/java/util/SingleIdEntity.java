@@ -22,5 +22,9 @@ public abstract class SingleIdEntity {
         // Create Long id number
         this.id = UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
     }
+    
+    public void setManualId(Long id){
+        this.id = id;
+    }
 }
     

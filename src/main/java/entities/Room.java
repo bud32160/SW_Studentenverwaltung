@@ -86,4 +86,12 @@ public class Room extends SingleIdEntity implements Serializable{
         this.examList = examList;
     }
     
+    @Override
+    public String toString(){
+        String result = "";
+         result = this.descriptor.toString() + this.number;
+         
+         return result;
+    }
+    
 }

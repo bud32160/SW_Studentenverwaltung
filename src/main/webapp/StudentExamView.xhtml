@@ -11,8 +11,8 @@
     <h:body>
         <ui:composition template="MainStructure.xhtml">
             <ui:define name="content">
-            <p:panel header="Prüfungsübersicht">
-            <p:dataTable var ="exam" value="#{examModel.getAllExams()}" >
+            <p:panel header="Angemeldete Prüfungen">
+                <p:dataTable var ="exam" value="#{examModel.getCurrentExamList(accountModel.currentStudent)}" >
                 <p:column headerText="Prüfung">
                     <h:outputText value = "#{exam.description}"/>
                 </p:column>
@@ -25,9 +25,9 @@
                 <p:column headerText="Betreuer">
                     <h:outputText value = "#{exam.instructor}"/>
                 </p:column>
-                <p:column headerText="Anmelden">
+                <p:column headerText="Abmelden">
                     <h:form>
-                        <p:commandButton value="Anmelden" id="signIn" ajax="false" action="#{examModel.signInStudent(accountModel.currentStudent, exam)}" />
+                    <p:commandButton value="Abmelden" id="signOut" ajax="false" action="#{examModel.signOutStudent(accountModel.currentStudent, exam)}" />
                     </h:form>
                 </p:column>
                 

@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.PayFast.sw.othr/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="PayementServiceService" targetNamespace="http://service.PayFast.sw.othr/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.PayFast.sw.othr/" elementFormDefault="unqualified" targetNamespace="http://service.PayFast.sw.othr/" version="1.0">
+
+  <xs:element name="account" type="tns:account"/>
+
+  <xs:element name="createTransaction" type="tns:createTransaction"/>
+
+  <xs:element name="createTransactionResponse" type="tns:createTransactionResponse"/>
+
+  <xs:element name="transaction" type="tns:transaction"/>
+
+  <xs:complexType name="createTransaction">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:transaction"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="transaction">
+    <xs:complexContent>
+      <xs:extension base="tns:singleIdEntity">
+        <xs:sequence>
+          <xs:element name="amount" type="xs:long"/>
+          <xs:element minOccurs="0" name="done" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="description" type="xs:string"/>
+          <xs:element name="paid" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="from" type="tns:account"/>
+          <xs:element minOccurs="0" name="to" type="tns:account"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="singleIdEntity">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="account">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id_email" type="xs:string"/>
+      <xs:element minOccurs="0" name="created" type="xs:dateTime"/>
+      <xs:element name="deleted" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="typ" type="tns:accountTyp"/>
+      <xs:element name="credit" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createTransactionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:transaction"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="accountTyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Business"/>
+      <xs:enumeration value="Student"/>
+      <xs:enumeration value="Privat"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="createTransaction">
+    <wsdl:part element="tns:createTransaction" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createTransactionResponse">
+    <wsdl:part element="tns:createTransactionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PayementService">
+    <wsdl:operation name="createTransaction">
+      <wsdl:input message="tns:createTransaction" name="createTransaction">
+    </wsdl:input>
+      <wsdl:output message="tns:createTransactionResponse" name="createTransactionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PayementServiceServiceSoapBinding" type="tns:PayementService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="createTransaction">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createTransaction">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createTransactionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PayementServiceService">
+    <wsdl:port binding="tns:PayementServiceServiceSoapBinding" name="PayementServicePort">
+      <soap:address location="http://im-lamport:8080/PayFast-1.0-/PayementService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

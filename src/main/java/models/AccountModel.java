@@ -2,6 +2,8 @@ package models;
 
 import controller.LogInController;
 import entities.Address;
+import entities.Course;
+import entities.Exam;
 import entities.Student;
 import entities.User;
 import enumerations.EAquisition;
@@ -9,12 +11,12 @@ import enumerations.EMajor;
 import enumerations.ERole;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import othr.sw.payfast.service.Transaction;
 import services.UserService;
 import services.StudentService;
 
@@ -53,7 +55,7 @@ public class AccountModel implements Serializable {
         this.currentUser = logInController.logIn(this.username, this.password);
         
         if(currentUser == null){
-            context.addMessage( null, new FacesMessage( "ERROR", "Benutzername oder Passwort falsch" ));
+            context.addMessage( null, new FacesMessage( "Benutzername oder Passwort falsch" ));
             logInStatus = false;
             
             return "LogInView";

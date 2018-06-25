@@ -11,6 +11,7 @@
     <h:body>
         <ui:composition template="MainStructure.xhtml">
             <ui:define name="content">
+                <p:panel header="Rückmeldung">
                 <h:form rendered="#{!accountModel.currentStudent.confirmationPayed}">
                     <br/>
                     <h:panelGrid columns="2" cellspacing="2" cellpadding="2">
@@ -32,7 +33,7 @@
                 <h:form rendered="#{accountModel.currentStudent.confirmationPayed}"> 
                     <p:outputLabel value="Die Rückmeldung wurde bereits durchgeführt!" />
                 </h:form>
-                
+                </p:panel>
             </ui:define>
         </ui:composition>
     </h:body>

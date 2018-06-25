@@ -24,8 +24,10 @@
                     <p:menubar>
                         <f:facet name="options">
                             <p:commandButton value="Meine Daten" ajax="false" action="StudentOverview"/>
-                            <p:commandButton value="Kurse" ajax="false" action="CourseOverview"/>
-                            <p:commandButton value="Prüfungen" ajax="false" action="ExamOverview"/>
+                            <p:commandButton value="Kursübersicht" ajax="false" action="CourseOverview"/>
+                            <p:commandButton value="Meine Kurse" ajax="false" action="StudentCourseView"/>
+                            <p:commandButton value="Prüfungsübersicht" ajax="false" action="ExamOverview"/>
+                            <p:commandButton value="Angemeldete Prüfungen" ajax="false" action="StudentExamView"/>
                             <p:commandButton value="Rückmeldung" ajax="false" action="ConfirmationView"/>
                             <p:commandButton value="Ausloggen" ajax="false" action="#{accountModel.logOut()}"/>
                         </f:facet>

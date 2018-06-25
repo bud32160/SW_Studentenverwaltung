@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import org.hibernate.annotations.LazyCollection;
@@ -20,11 +21,18 @@ import util.SingleIdEntity;
 
 @Entity
 @Table(name="COURSE_TABLE")
-@NamedQuery(name="Course.getAllCourse", query="SELECT c FROM Course AS c")
+@NamedQueries({
+    @NamedQuery(name="Course.getAllCourse", query="SELECT c FROM Course AS c"),
+    @NamedQuery(name = "Course.getCourseByDescription", query = "SELECT c FROM Course AS c WHERE c.description = :description" )
+})
+
 public class Course extends SingleIdEntity implements Serializable {
     
     @Column(name="Description")
     private String description;
+    
+    @Column(name="ExamId")
+    private Long examId;
     
     @Column(name="Major")
     private EMajor major;
@@ -54,7 +62,21 @@ public class Course extends SingleIdEntity implements Serializable {
     public Course() {
     }
 
-    public Course(String description, EMajor major, String instructor, EDay eDay, ETime eTime, Room room, List<Student> participants, int capacity) {
+    public Course(String description, Long examId, EMajor major, String instructor, EDay eDay, ETime eTime, Room room, List<Student> participants, int capacity) {
+        this.description = description;
+        this.examId = examId;
+        this.major = major;
+        this.instructor = instructor;
+        this.eDay = eDay;
+        this.eTime = eTime;
+        this.room = room;
+        this.participants = participants;
+        this.capacity = capacity;
+    }
+    
+    public Course(Long id, String description, Long examId, EMajor major, String instructor, EDay eDay, ETime eTime, Room room, List<Student> participants, int capacity) {
+        this.setManualId(id);
+        this.examId = examId;
         this.description = description;
         this.major = major;
         this.instructor = instructor;
@@ -64,6 +86,8 @@ public class Course extends SingleIdEntity implements Serializable {
         this.participants = participants;
         this.capacity = capacity;
     }
+    
+    
     
     public void addParticipant(Student student){
         if(this.participants==null)
@@ -79,6 +103,14 @@ public class Course extends SingleIdEntity implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getExamId() {
+        return examId;
+    }
+
+    public void setExamId(Long examId) {
+        this.examId = examId;
     }
 
     public EMajor getMajor() {

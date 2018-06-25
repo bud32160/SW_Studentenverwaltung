@@ -21,6 +21,7 @@
                     <p:outputLabel value="Password" />
                     <p:password id="password" value="#{accountModel.password}" required="true" requiredMessage="Passwort erforderlich!" size="20" maxlength="20" placeholder="Passwort"/>
                     <p:commandButton value="Anmelden" id="loginBtn" ajax="false" action="#{accountModel.logIn()}" />
+                    <h:messages globalOnly="true" infoClass="info" />
                     </h:panelGrid>
                     </p:panel>
                 </h:form>

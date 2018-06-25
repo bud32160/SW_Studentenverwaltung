@@ -1,16 +1,19 @@
 package entities;
 
+import enumerations.EDay;
+import enumerations.ETime;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -21,17 +24,20 @@ import util.SingleIdEntity;
 
 @Entity
 @Table(name="EXAM_TABLE")
-@NamedQuery(name="Exam.getAllExams", query="SELECT e FROM Exam AS e")
+@NamedQueries({
+    @NamedQuery(name="Exam.getAllExams", query="SELECT e FROM Exam AS e"),
+    @NamedQuery(name = "Exam.getExamByDescription", query = "SELECT e FROM Exam AS e WHERE e.description = :description" )
+})
 public class Exam extends SingleIdEntity implements Serializable {
 
-    @Column(name="Course_Id")
+    @Column(name="CoursId")
     private Long courseId;
-    
-    @Column(name="Time")
-    private String time;
     
     @Column(name="Date")
     private Date date;
+    
+    @Column(name="Description")
+    private String description;
     
     @Column(name="Instructor")
     private String instructor;
@@ -52,12 +58,13 @@ public class Exam extends SingleIdEntity implements Serializable {
     public Exam() {
     }
 
-    public Exam(Long courseId, String time, Date date, String instructor, Room room, int capacity) {
+    public Exam(Long id, Long courseId, Date date, String description, String instructor, Room room, List<Student> participants, int capacity) {
+        this.setManualId(id);
         this.courseId = courseId;
-        this.time = time;
         this.date = date;
         this.instructor = instructor;
         this.room = room;
+        this.participants = participants;
         this.capacity = capacity;
     }
     
@@ -69,20 +76,13 @@ public class Exam extends SingleIdEntity implements Serializable {
     }
     
     // Getter and setter
+
     public Long getCourseId() {
         return courseId;
     }
 
     public void setCourseId(Long courseId) {
         this.courseId = courseId;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public Date getDate() {
@@ -92,7 +92,7 @@ public class Exam extends SingleIdEntity implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
-
+    
     public String getInstructor() {
         return instructor;
     }
@@ -125,4 +125,29 @@ public class Exam extends SingleIdEntity implements Serializable {
     public void setKandidaten(List<Student> participants) {
         this.participants = participants;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public String dateToString(){
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yy");
+        
+        return df.format(this.date);
+    }
+    
+    public String timeToString(){
+        SimpleDateFormat df = new SimpleDateFormat("H:mm");
+        
+        return df.format(this.date);
+    }
+    
+    public String dateFormatted(){
+        return (dateToString() + " - " + timeToString());
+    }
+    
 }

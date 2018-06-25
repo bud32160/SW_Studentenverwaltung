@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-       <ui:composition template="MainStructure.xhtml">
+        <ui:composition template="MainStructure.xhtml">
+
             <ui:define name="content">
-            <p:panel header="Kursübersicht">
-            <p:dataTable var ="course" value="#{courseModel.getAllCourse()}" >
+            <p:panel header="Angemeldete Kurse">
+                <p:dataTable var ="course" value="#{courseModel.getCurrentCourseList(accountModel.currentStudent)}" >
                 <p:column headerText="Kurs">
                     <h:outputText value = "#{course.description}"/>
                 </p:column>
@@ -28,11 +29,12 @@
                 <p:column headerText="Raum">
                     <h:outputText value = "#{course.room.toString()}"/>
                 </p:column>
-                <p:column headerText="Anmeldung">
+                <p:column headerText="Abmelden">
                     <h:form>
-                        <p:commandButton value="Anmelden" id="signIn" ajax="false" action="#{courseModel.signInCourseStudent(accountModel.currentStudent, course)}" />
-                    </h:form> 
+                    <p:commandButton value="Abmelden" id="signIn" ajax="false" action="#{courseModel.signOutCourseStudent(accountModel.currentStudent, course)}" />
+                    </h:form>
                 </p:column>
+                
                 
                 
             </p:dataTable>

@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    
+    <navigation-rule>
+        <description>General navigation rules</description>
+        <from-view-id>*</from-view-id>
+
+            <navigation-case>
+                <from-outcome>LogInSuccess</from-outcome>
+                <to-view-id>/WelcomeView.xhtml</to-view-id>
+            </navigation-case>
+            
+            <navigation-case>
+                <from-outcome>LogInFail</from-outcome>
+                <to-view-id>/LogInView.xhtml</to-view-id>
+            </navigation-case>
+            
+            <navigation-case>
+                <from-outcome>LogOut</from-outcome>
+                <to-view-id>/LogInView.xhtml</to-view-id>
+            </navigation-case>
+            
+            <navigation-case>
+                <from-outcome>RegistrationSuccess</from-outcome>
+                <to-view-id>/RegistratedView.xhtml</to-view-id>
+            </navigation-case>  
+                       
+            <navigation-case>
+                <from-outcome>RegistrationFail</from-outcome>
+                <to-view-id>/RegistrationView.xhtml</to-view-id>
+            </navigation-case>
+            
+            <navigation-case>
+		<from-outcome>StudentOverview</from-outcome>
+		<to-view-id>/StudentOverview.xhtml</to-view-id>
+            </navigation-case>
+            
+            <navigation-case>
+		<from-outcome>ConfirmationView</from-outcome>
+		<to-view-id>/ConfirmationView.xhtml</to-view-id>
+            </navigation-case>
+            
+            <navigation-case>
+		<from-outcome>AddressView</from-outcome>
+		<to-view-id>/AddressView.xhtml</to-view-id>
+            </navigation-case>
+            
+            <navigation-case>
+		<from-outcome>AddressView</from-outcome>
+		<to-view-id>/AddressView.xhtml</to-view-id>
+            </navigation-case>
+            
+            <navigation-case>
+		<from-outcome>StudentCourseView</from-outcome>
+		<to-view-id>/StudentCourseView.xhtml</to-view-id>
+            </navigation-case>
+            
+            <navigation-case>
+		<from-outcome>StudentExamView</from-outcome>
+		<to-view-id>/StudentExamView.xhtml</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+
+</faces-config>
